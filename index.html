@@ -4,195 +4,235 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Waifu Tap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100dvh;overflow:hidden;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a12;color:#eee;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html,body{width:100%;height:100dvh;overflow:hidden;font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#0a0015;color:#fff;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-html{font-family:'Inter','Segoe UI',system-ui,sans-serif;}
-
-/* ─── APP ─── */
+/* ─── ANIMATED BACKGROUND ─── */
 #app{width:100%;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 0%,#1a0a20 0%,#0d0a15 50%,#0a0a12 100%);}
-#app::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+  background:linear-gradient(170deg,#0a0015 0%,#1a0a2e 30%,#2d1045 60%,#1a0a2e 80%,#0a0015 100%);}
+#app::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(ellipse at 30% 20%,rgba(200,80,200,0.08) 0%,transparent 50%),
+             radial-gradient(ellipse at 70% 80%,rgba(255,105,180,0.06) 0%,transparent 50%),
+             radial-gradient(ellipse at 50% 50%,rgba(100,50,150,0.04) 0%,transparent 50%);
+  animation:bgShift 20s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes bgShift{0%{transform:translate(0,0)}25%{transform:translate(-20px,20px)}50%{transform:translate(10px,-30px)}75%{transform:translate(-10px,10px)}100%{transform:translate(0,0)}}
+
+/* ─── FLOATING ORBS ─── */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;opacity:0.15;
+  background:radial-gradient(circle at center,rgba(255,105,180,0.3),transparent);}
+.orb1{width:300px;height:300px;top:-100px;right:-80px;animation:float1 8s ease-in-out infinite;}
+.orb2{width:200px;height:200px;bottom:-50px;left:-60px;animation:float2 10s ease-in-out infinite;}
+.orb3{width:150px;height:150px;top:40%;right:-40px;animation:float3 12s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-40px)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,-20px)}}
+
+/* ─── GLASS EFFECT ─── */
+.glass{border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
 
 /* ─── TOP HUD ─── */
-#hud{position:relative;z-index:10;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,transparent 100%);}
-#hud-coins{display:flex;align-items:center;gap:6px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);border-radius:16px;padding:6px 14px 6px 10px;font-size:18px;font-weight:900;color:#ffd700;text-shadow:0 0 15px rgba(255,215,0,0.2);}
-#hud-stars{display:flex;align-items:center;gap:4px;background:rgba(245,194,224,0.08);border:1px solid rgba(245,194,224,0.15);border-radius:16px;padding:6px 14px 6px 10px;font-size:16px;font-weight:800;color:#f5c2e0;}
+#hud{position:relative;z-index:10;padding:16px 18px 10px;display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,transparent 100%);}
+#hud-left{display:flex;align-items:center;gap:10px;}
+#hud-title{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;background:linear-gradient(135deg,#f5c2e0,#ff69b4,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.5px;}
+#hud-coins{display:flex;align-items:center;gap:6px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.12);border-radius:20px;padding:6px 16px 6px 10px;font-size:17px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.15);backdrop-filter:blur(10px);}
+#hud-stars{display:flex;align-items:center;gap:4px;background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.12);border-radius:20px;padding:6px 14px 6px 10px;font-size:15px;font-weight:800;color:#c084fc;backdrop-filter:blur(10px);}
 .hud-right{display:flex;gap:8px;}
 
 /* ─── GAME AREA ─── */
-#game{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;overflow:hidden;}
-#waifu-wrap{position:relative;width:280px;height:340px;cursor:pointer;transition:transform 0.1s;}
-#waifu-wrap:active{transform:scale(0.94);}
-#waifu-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 30px rgba(255,100,150,0.15));transition:filter 0.3s;}
-#waifu-name{font-size:16px;font-weight:800;color:#f5c2e0;margin-top:8px;text-shadow:0 0 10px rgba(245,194,224,0.3);letter-spacing:0.5px;}
-#tap-hint{font-size:12px;color:#666;margin-top:4px;font-weight:600;}
+#game{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;}
+#waifu-wrap{position:relative;width:260px;height:320px;cursor:pointer;transition:transform 0.15s cubic-bezier(0.16,1,0.3,1);}
+#waifu-wrap:active{transform:scale(0.92);}
+#waifu-wrap img{width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 0 40px rgba(255,100,150,0.12)) drop-shadow(0 0 80px rgba(200,80,200,0.08));
+  transition:filter 0.4s;}
+#waifu-name{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:800;color:#f5c2e0;margin-top:6px;
+  text-shadow:0 0 20px rgba(245,194,224,0.2);letter-spacing:1px;}
+#tap-hint{font-size:11px;color:rgba(255,255,255,0.2);margin-top:6px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
 
-/* ─── TAP PARTICLES ─── */
-.tap-particle{position:absolute;pointer-events:none;font-size:20px;font-weight:900;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,0.5);animation:floatUp 1s ease-out forwards;z-index:20;}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5);}100%{opacity:0;transform:translateY(-120px) scale(1.2);}}
+/* ─── TAP PARTICLES (элегантно) ─── */
+.tap-particle{position:absolute;pointer-events:none;font-family:'Unbounded',sans-serif;
+  font-weight:900;text-shadow:0 0 20px currentColor;z-index:20;animation:particleUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;}
+@keyframes particleUp{0%{opacity:1;transform:translateY(0) scale(0.5);filter:blur(0);}100%{opacity:0;transform:translateY(-100px) scale(1.4);filter:blur(4px);}}
+.tap-ripple{position:absolute;border-radius:50%;pointer-events:none;z-index:19;
+  animation:rippleOut 0.6s ease-out forwards;}
+@keyframes rippleOut{0%{width:0;height:0;opacity:0.4;border:2px solid rgba(255,105,180,0.5);}100%{width:200px;height:200px;opacity:0;border:1px solid rgba(255,105,180,0);}}
 
 /* ─── ENERGY BAR ─── */
-#energy-wrap{position:relative;z-index:10;padding:8px 16px 4px;}
-#energy-bar{display:flex;align-items:center;gap:8px;padding:0 4px;}
-#energy-icon{font-size:12px;}
-#energy-track{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;}
-#energy-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#f5c2e0,#ff69b4);width:100%;transition:width 0.3s ease;box-shadow:0 0 8px rgba(255,105,180,0.3);}
-#energy-text{font-size:11px;font-weight:700;color:#999;min-width:45px;text-align:right;font-variant-numeric:tabular-nums;}
+#energy-wrap{position:relative;z-index:10;padding:4px 18px 6px;}
+#energy-bar{display:flex;align-items:center;gap:10px;padding:4px 6px;}
+#energy-icon{font-size:11px;width:22px;text-align:center;}
+#energy-track{flex:1;height:6px;background:rgba(255,255,255,0.04);border-radius:10px;overflow:hidden;box-shadow:inset 0 0 4px rgba(0,0,0,0.2);}
+#energy-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#c084fc,#f5c2e0,#ff69b4);width:100%;transition:width 0.3s ease;box-shadow:0 0 12px rgba(255,105,180,0.2);}
+#energy-text{font-size:11px;font-weight:800;color:rgba(255,255,255,0.3);min-width:48px;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:0.5px;}
 
 /* ─── NAV ─── */
-#nav{position:relative;z-index:10;display:flex;justify-content:space-around;padding:6px 8px 16px;background:linear-gradient(0deg,rgba(0,0,0,0.6) 0%,transparent 100%);}
-.nav-btn{background:none;border:none;color:#666;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;border-radius:12px;cursor:pointer;transition:all 0.2s;font-size:10px;font-weight:600;min-width:56px;}
-.nav-btn .nav-icon{font-size:22px;transition:transform 0.2s;}
-.nav-btn:active .nav-icon{transform:scale(0.8);}
-.nav-btn.active{color:#f5c2e0;background:rgba(245,194,224,0.06);}
-.nav-btn.active .nav-icon{filter:drop-shadow(0 0 6px rgba(245,194,224,0.3));}
+#nav{position:relative;z-index:10;display:flex;justify-content:space-around;padding:6px 6px 18px;
+  background:linear-gradient(0deg,rgba(0,0,0,0.4) 0%,transparent 100%);}
+.nav-btn{background:none;border:none;color:rgba(255,255,255,0.25);display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:8px 14px;border-radius:16px;cursor:pointer;transition:all 0.25s;font-size:9px;font-weight:800;min-width:52px;letter-spacing:0.5px;text-transform:uppercase;}
+.nav-btn .nav-icon{font-size:20px;transition:transform 0.2s;margin-bottom:1px;}
+.nav-btn:active .nav-icon{transform:scale(0.75);}
+.nav-btn.active{color:#f5c2e0;background:rgba(245,194,224,0.06);box-shadow:0 0 20px rgba(245,194,224,0.04);}
+.nav-btn.active .nav-icon{filter:drop-shadow(0 0 8px rgba(245,194,224,0.2));}
 
 /* ─── PAGE SYSTEM ─── */
-.page-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;animation:fadeIn 0.2s ease-out;}
+.page-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:50;background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;animation:fadeIn 0.25s ease-out;}
 .page-overlay.show{display:block;}
 @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
-.page-panel{position:fixed;bottom:0;left:0;width:100%;max-height:85dvh;z-index:51;background:linear-gradient(180deg,#14121a 0%,#1a1625 100%);border-radius:20px 20px 0 0;display:none;animation:slideUp 0.3s cubic-bezier(0.16,1,0.3,1);}
+.page-panel{position:fixed;bottom:0;left:0;width:100%;max-height:87dvh;z-index:51;
+  background:linear-gradient(180deg,rgba(20,10,35,0.98) 0%,rgba(15,5,30,0.98) 100%);
+  border:1px solid rgba(255,255,255,0.04);border-radius:24px 24px 0 0;display:none;
+  animation:slideUp 0.35s cubic-bezier(0.16,1,0.3,1);}
 .page-panel.show{display:flex;flex-direction:column;}
 @keyframes slideUp{0%{transform:translateY(100%);opacity:0.5;}100%{transform:translateY(0);opacity:1;}}
-.page-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid rgba(255,255,255,0.04);}
-.page-header h2{font-size:18px;font-weight:800;color:#f5c2e0;}
-.page-close{background:none;border:none;color:#888;font-size:24px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:all 0.2s;}
-.page-close:active{background:rgba(255,255,255,0.05);}
-.page-body{flex:1;overflow-y:auto;padding:12px 20px 24px;-webkit-overflow-scrolling:touch;}
+.page-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.page-header h2{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.page-close{background:none;border:none;color:rgba(255,255,255,0.15);font-size:22px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:all 0.2s;font-weight:300;}
+.page-close:active{background:rgba(255,255,255,0.03);}
+.page-body{flex:1;overflow-y:auto;padding:14px 20px 24px;-webkit-overflow-scrolling:touch;}
 
 /* ─── SHOP ─── */
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:20px;}
-.shop-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);border-radius:14px;padding:14px;cursor:pointer;transition:all 0.2s;}
-.shop-card:active{transform:scale(0.96);background:rgba(245,194,224,0.04);}
-.shop-card .s-icon{font-size:28px;margin-bottom:4px;}
-.shop-card .s-name{font-size:13px;font-weight:800;color:#eee;}
-.shop-card .s-desc{font-size:10px;color:#888;font-weight:600;margin-top:2px;line-height:1.3;}
-.shop-card .s-price{font-size:14px;font-weight:900;color:#ffd700;margin-top:6px;}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:16px;}
+.shop-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:18px;padding:16px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.shop-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);}
+.shop-card:active{transform:scale(0.94);background:rgba(245,194,224,0.03);border-color:rgba(245,194,224,0.08);}
+.shop-card .s-icon{font-size:30px;margin-bottom:4px;}
+.shop-card .s-name{font-size:13px;font-weight:800;color:#eee;font-family:'Unbounded',sans-serif;}
+.shop-card .s-desc{font-size:9px;color:rgba(255,255,255,0.3);font-weight:700;margin-top:3px;line-height:1.4;text-transform:uppercase;letter-spacing:0.5px;}
+.shop-card .s-price{font-size:14px;font-weight:900;color:#ffd700;margin-top:8px;text-shadow:0 0 10px rgba(255,215,0,0.1);}
 
 /* ─── WAIFUS ─── */
 .waifu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.waifu-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;}
-.waifu-card:active{transform:scale(0.96);}
-.waifu-card.selected{border-color:#f5c2e0;background:rgba(245,194,224,0.06);box-shadow:0 0 20px rgba(245,194,224,0.1);}
-.waifu-card .w-emoji{font-size:40px;display:block;margin-bottom:6px;}
-.waifu-card .w-name{font-size:14px;font-weight:800;color:#eee;}
-.waifu-card .w-rarity{font-size:10px;font-weight:700;color:#888;margin-top:2px;}
-.waifu-card .w-bonus{font-size:10px;font-weight:700;color:#ffd700;margin-top:4px;}
+.waifu-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:20px;padding:18px 12px;text-align:center;cursor:pointer;transition:all 0.25s;}
+.waifu-card:active{transform:scale(0.94);}
+.waifu-card.selected{border-color:rgba(245,194,224,0.2);background:rgba(245,194,224,0.04);box-shadow:0 0 30px rgba(245,194,224,0.06);}
+.waifu-card .w-emoji{font-size:42px;display:block;margin-bottom:8px;filter:drop-shadow(0 0 10px rgba(255,105,180,0.1));}
+.waifu-card .w-name{font-size:13px;font-weight:800;color:#eee;font-family:'Unbounded',sans-serif;}
+.waifu-card .w-rarity{font-size:9px;font-weight:700;color:rgba(255,255,255,0.25);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;}
+.waifu-card .w-bonus{font-size:10px;font-weight:700;color:#ffd700;margin-top:6px;}
 .waifu-card.selected .w-bonus{color:#4ade80;}
 
 /* ─── DAILY ─── */
-.daily-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0;}
-.d-day{aspect-ratio:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:700;gap:1px;transition:all 0.25s;}
-.d-day .dd-num{font-size:14px;font-weight:800;}
-.d-day .dd-r{font-size:8px;color:#888;}
-.d-day.claimed{border-color:#4ade80;background:rgba(74,222,128,0.06);}
-.d-day.claimed .dd-r{color:#4ade80;}
-.d-day.current{border-color:#f5c2e0;background:rgba(245,194,224,0.08);transform:scale(1.05);box-shadow:0 0 15px rgba(245,194,224,0.1);}
-.d-day.locked{opacity:0.35;}
-.daily-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#f5c2e0,#ff69b4);color:#fff;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-top:8px;}
-.daily-btn:active{transform:scale(0.97);}
-.daily-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.daily-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0;}
+.d-day{aspect-ratio:0.8;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;gap:2px;transition:all 0.3s;}
+.d-day .dd-num{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:900;}
+.d-day .dd-r{font-size:7px;color:rgba(255,255,255,0.3);font-weight:700;}
+.d-day.claimed{border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03);}
+.d-day.claimed .dd-r{color:rgba(74,222,128,0.6);}
+.d-day.current{border-color:rgba(245,194,224,0.25);background:rgba(245,194,224,0.05);transform:scale(1.06);
+  box-shadow:0 0 20px rgba(245,194,224,0.06);}
+.d-day.current .dd-num{color:#f5c2e0;}
+.d-day.locked{opacity:0.25;}
+.daily-btn{width:100%;padding:16px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,#c084fc,#f5c2e0,#ff69b4);color:#fff;font-size:16px;font-weight:900;cursor:pointer;
+  transition:all 0.25s;margin-top:10px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.15);}
+.daily-btn:active{transform:scale(0.94);}
+.daily-btn:disabled{opacity:0.2;cursor:not-allowed;transform:none;box-shadow:none;}
 
 /* ─── LEADERBOARD ─── */
-.lb-entry{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,0.03);}
-.lb-rank{font-size:18px;font-weight:900;min-width:34px;text-align:center;}
-.lb-rank.gold{color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,0.3);}
+.lb-entry{display:flex;align-items:center;gap:12px;padding:12px 6px;border-bottom:1px solid rgba(255,255,255,0.02);}
+.lb-rank{font-size:16px;font-weight:900;min-width:34px;text-align:center;font-family:'Unbounded',sans-serif;}
+.lb-rank.gold{color:#ffd700;text-shadow:0 0 15px rgba(255,215,0,0.2);}
 .lb-rank.silver{color:#c0c0c0;}
 .lb-rank.bronze{color:#cd7f32;}
-.lb-ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(245,194,224,0.06);}
+.lb-ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(245,194,224,0.04);}
 .lb-info{flex:1;}
 .lb-name{font-size:13px;font-weight:800;color:#eee;}
-.lb-sub{font-size:10px;color:#888;font-weight:600;margin-top:1px;}
-.lb-coins{font-size:14px;font-weight:900;color:#ffd700;}
+.lb-sub{font-size:9px;color:rgba(255,255,255,0.2);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.lb-coins{font-size:14px;font-weight:900;color:#ffd700;font-family:'Unbounded',sans-serif;}
 
 /* ─── REFERRAL ─── */
-.ref-section{text-align:center;padding:10px 0;}
-.ref-icon{font-size:56px;margin-bottom:10px;}
-.ref-title{font-size:20px;font-weight:800;color:#f5c2e0;margin-bottom:4px;}
-.ref-desc{font-size:13px;color:#aaa;font-weight:600;margin-bottom:16px;line-height:1.5;}
-.ref-stats{display:flex;justify-content:center;gap:32px;margin-bottom:16px;}
+.ref-section{text-align:center;padding:14px 0;}
+.ref-icon{font-size:60px;margin-bottom:12px;filter:drop-shadow(0 0 20px rgba(245,194,224,0.1));}
+.ref-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.ref-desc{font-size:12px;color:rgba(255,255,255,0.4);font-weight:700;margin-bottom:18px;line-height:1.6;letter-spacing:0.3px;}
+.ref-stats{display:flex;justify-content:center;gap:40px;margin-bottom:18px;}
 .ref-stat{text-align:center;}
-.ref-stat .rs-v{font-size:28px;font-weight:900;color:#f5c2e0;}
-.ref-stat .rs-l{font-size:11px;color:#888;font-weight:600;margin-top:2px;}
-.ref-link-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:12px;font-size:11px;color:#f5c2e0;font-weight:700;word-break:break-all;}
-.ref-copy-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#f5c2e0,#ff69b4);color:#fff;font-size:15px;font-weight:800;cursor:pointer;transition:all 0.2s;}
-.ref-copy-btn:active{transform:scale(0.97);}
+.ref-stat .rs-v{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:900;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ref-stat .rs-l{font-size:10px;color:rgba(255,255,255,0.2);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.ref-link-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.04);border-radius:14px;padding:14px;margin-bottom:14px;font-size:10px;color:rgba(255,255,255,0.3);font-weight:700;word-break:break-all;letter-spacing:0.3px;font-family:monospace;}
+.ref-copy-btn{width:100%;padding:16px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,#c084fc,#f5c2e0,#ff69b4);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
+  transition:all 0.25s;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.12);}
+.ref-copy-btn:active{transform:scale(0.94);}
 
-/* ─── AD BANNER ─── */
-#adBanner{position:fixed;bottom:200px;left:50%;transform:translateX(-50%);z-index:40;display:none;background:linear-gradient(135deg,rgba(245,194,224,0.95),rgba(255,105,180,0.95));border-radius:16px;padding:12px 24px;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);cursor:pointer;animation:adUp 0.4s ease-out;box-shadow:0 8px 32px rgba(255,105,180,0.3);font-size:14px;font-weight:800;color:#fff;gap:8px;align-items:center;}
-#adBanner .ad-dismiss{font-size:12px;color:rgba(255,255,255,0.5);margin-left:10px;}
+/* ─── AD BUTTON ─── */
+#adBanner{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:40;display:none;
+  background:linear-gradient(135deg,rgba(192,132,252,0.9),rgba(255,105,180,0.9));
+  border-radius:20px;padding:14px 28px;backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;animation:adUp 0.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 8px 40px rgba(255,105,180,0.2);font-size:14px;font-weight:800;color:#fff;gap:8px;align-items:center;
+  font-family:'Unbounded',sans-serif;letter-spacing:0.5px;white-space:nowrap;}
+#adBanner .ad-sub{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:0.5px;}
 @keyframes adUp{0%{opacity:0;transform:translateX(-50%) translateY(40px);}100%{opacity:1;transform:translateX(-50%) translateY(0);}}
 
+/* ─── AD MODAL ─── */
+#adModal{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:300;background:rgba(0,0,0,0.8);backdrop-filter:blur(24px);display:none;flex-direction:column;align-items:center;justify-content:center;}
+#adModal.show{display:flex;}
+#adVideo{width:280px;height:180px;background:rgba(255,255,255,0.02);border-radius:20px;border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:16px;position:relative;}
+#adTimer{font-family:'Unbounded',sans-serif;font-size:56px;font-weight:900;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#adLabel{font-size:13px;color:rgba(255,255,255,0.2);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+#adReward{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;color:#ffd700;margin-top:12px;text-shadow:0 0 20px rgba(255,215,0,0.1);}
+#adSkipBtn{padding:12px 32px;border:1px solid rgba(255,255,255,0.06);border-radius:14px;background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.2);font-size:13px;font-weight:800;cursor:pointer;transition:all 0.25s;margin-top:16px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;}
+#adSkipBtn:active{transform:scale(0.94);}
+#adCloseBtn{padding:12px 32px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#c084fc,#f5c2e0,#ff69b4);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
+  transition:all 0.25s;margin-top:16px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.15);display:none;}
+#adCloseBtn:active{transform:scale(0.94);}
+
 /* ─── TOAST ─── */
-#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(15,10,25,0.96);border:1px solid rgba(245,194,224,0.15);border-radius:14px;padding:12px 22px;font-size:14px;font-weight:800;color:#fff;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.5);display:none;max-width:88%;text-align:center;letter-spacing:0.3px;}
-#toast.show{display:block;animation:toastIn 0.35s cubic-bezier(0.16,1,0.3,1);}
-@keyframes toastIn{0%{opacity:0;transform:translateX(-50%) translateY(-15px) scale(0.9);}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
+#toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;
+  background:rgba(10,0,20,0.96);border:1px solid rgba(255,255,255,0.06);border-radius:16px;
+  padding:14px 24px;font-size:13px;font-weight:800;color:#fff;backdrop-filter:blur(16px);
+  box-shadow:0 8px 40px rgba(0,0,0,0.5);display:none;max-width:88%;text-align:center;letter-spacing:0.3px;font-family:'Unbounded',sans-serif;}
+#toast.show{display:block;animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1);}
+@keyframes toastIn{0%{opacity:0;transform:translateX(-50%) translateY(-20px) scale(0.9);}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
 
 /* ─── MODAL ─── */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:200;background:rgba(0,0,0,0.7);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:200;background:rgba(0,0,0,0.6);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
-.modal-box{background:linear-gradient(180deg,#1a1625,#14121a);border:1px solid rgba(255,255,255,0.04);border-radius:24px;padding:28px 24px 20px;max-width:320px;width:90%;text-align:center;animation:modalIn 0.3s cubic-bezier(0.16,1,0.3,1);}
-@keyframes modalIn{0%{opacity:0;transform:scale(0.9);}100%{opacity:1;transform:scale(1);}}
-.modal-box h3{font-size:20px;font-weight:800;color:#f5c2e0;margin-bottom:8px;}
-.modal-box p{font-size:14px;color:#bbb;font-weight:600;line-height:1.5;margin-bottom:16px;}
+.modal-box{background:linear-gradient(180deg,rgba(20,10,35,0.98),rgba(15,5,30,0.98));border:1px solid rgba(255,255,255,0.04);border-radius:28px;padding:32px 24px 24px;max-width:320px;width:90%;text-align:center;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1);}
+@keyframes modalIn{0%{opacity:0;transform:scale(0.88);}100%{opacity:1;transform:scale(1);}}
+.modal-box h3{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.modal-box p{font-size:14px;color:rgba(255,255,255,0.5);font-weight:700;line-height:1.6;margin-bottom:20px;letter-spacing:0.3px;}
 .modal-actions{display:flex;gap:8px;}
-.modal-actions button{flex:1;padding:12px;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#f5c2e0,#ff69b4);color:#fff;}
-.modal-actions button:active{transform:scale(0.96);}
-.modal-actions button.sec{background:rgba(255,255,255,0.04);color:#888;}
+.modal-actions button{flex:1;padding:14px;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.25s;
+  background:linear-gradient(135deg,#c084fc,#f5c2e0,#ff69b4);color:#fff;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;}
+.modal-actions button:active{transform:scale(0.94);}
+.modal-actions button.sec{background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.04);}
 
 /* ─── SCROLLBAR ─── */
 .page-body::-webkit-scrollbar{width:2px;}
 .page-body::-webkit-scrollbar-track{background:transparent;}
-.page-body::-webkit-scrollbar-thumb{background:rgba(245,194,224,0.15);border-radius:10px;}
+.page-body::-webkit-scrollbar-thumb{background:rgba(245,194,224,0.1);border-radius:10px;}
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:360px){
-  #waifu-wrap{width:220px;height:280px;}
-  #hud{padding:8px 10px;}
+  #waifu-wrap{width:210px;height:270px;}
+  #hud{padding:12px 10px;}
   .shop-grid{grid-template-columns:1fr;}
+  #hud-title{font-size:13px;}
+}
+@media(min-width:768px){
+  #waifu-wrap{width:320px;height:400px;}
 }
 </style>
 </head>
 <body>
-<div id="app">
-  <!-- HUD -->
-  <div id="hud">
-    <div id="hud-coins">🪙 <span id="coinDisplay">0</span></div>
-    <div class="hud-right">
-      <div id="hud-stars">⭐ <span id="starDisplay">0</span></div>
-    </div>
-  </div>
+<div id="app"></div>
 
-  <!-- GAME AREA -->
-  <div id="game">
-    <div id="waifu-wrap">
-      <img id="waifu-img" src="/assets/images/waifu1.svg" alt="waifu" draggable="false">
-    </div>
-    <div id="waifu-name">🌸 Сакура</div>
-    <div id="tap-hint">👆 Тапай по вайфу!</div>
-  </div>
-
-  <!-- ENERGY -->
-  <div id="energy-wrap">
-    <div id="energy-bar">
-      <span id="energy-icon">⚡</span>
-      <div id="energy-track"><div id="energy-fill" style="width:100%"></div></div>
-      <span id="energy-text">100/100</span>
-    </div>
-  </div>
-
-  <!-- NAV -->
-  <div id="nav">
-    <button class="nav-btn" data-page="shop" onclick="openPage('shop')"><span class="nav-icon">🛍️</span>Магазин</button>
-    <button class="nav-btn" data-page="waifus" onclick="openPage('waifus')"><span class="nav-icon">🌸</span>Вайфу</button>
-    <button class="nav-btn" data-page="daily" onclick="openPage('daily')"><span class="nav-icon">🎁</span>Награды</button>
-    <button class="nav-btn" data-page="referral" onclick="openPage('referral')"><span class="nav-icon">🔗</span>Друзья</button>
-    <button class="nav-btn" data-page="leaderboard" onclick="openPage('leaderboard')"><span class="nav-icon">🏆</span>Топ</button>
-  </div>
-</div>
+<!-- FLOATING ORBS -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
 
 <!-- SHOP PAGE -->
 <div class="page-overlay" id="ov-shop" onclick="closePage('shop')"></div>
@@ -233,9 +273,19 @@ html{font-family:'Inter','Segoe UI',system-ui,sans-serif;}
 <div id="toast"></div>
 
 <!-- AD BANNER -->
-<div id="adBanner" onclick="this.style.display='none'">
-  <span>🎯 Реклама · +50 🪙</span>
-  <span class="ad-dismiss">✕</span>
+<div id="adBanner" onclick="openAd()">
+  <span>🎬 Смотреть рекламу</span>
+  <span class="ad-sub">· +100 🪙</span>
+</div>
+
+<!-- AD MODAL -->
+<div id="adModal">
+  <div id="adVideo">📺</div>
+  <div id="adTimer">5</div>
+  <div id="adLabel">Реклама</div>
+  <div id="adReward">+100 🪙 после просмотра</div>
+  <button id="adSkipBtn" onclick="skipAd()">⏭ Пропустить</button>
+  <button id="adCloseBtn" onclick="closeAd()">🎉 Получить награду</button>
 </div>
 
 <!-- MODAL -->
@@ -249,25 +299,59 @@ html{font-family:'Inter','Segoe UI',system-ui,sans-serif;}
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-// ─── СТАНДАРТНЫЕ ШТУКИ (Telegram WebApp SDK) ───
+// ─── STANDA√TNE ШТУКИ (Telegram WebApp SDK) ───
 let TG = null;
 (function ensureTG() {
   if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
     TG = window.Telegram.WebApp;
     TG.expand();
     TG.disableVerticalSwipes?.();
-    TG.setHeaderColor?.('#0a0a12');
-    TG.ready(); // Немедленно скрываем спиннер
+    TG.setHeaderColor?.('#0a0015');
+    TG.ready();
   } else {
-    // Если Telegram.WebApp ещё не injected — ждём и пробуем снова
     setTimeout(ensureTG, 100);
   }
 })();
+
+// ─── APP HTML ───
+document.getElementById('app').innerHTML = `
+  <div id="hud">
+    <div id="hud-left">
+      <div id="hud-title">Waifu Tap</div>
+    </div>
+    <div class="hud-right">
+      <div id="hud-coins">🪙 <span id="coinDisplay">0</span></div>
+      <div id="hud-stars">⭐ <span id="starDisplay">0</span></div>
+    </div>
+  </div>
+  <div id="game">
+    <div id="waifu-wrap">
+      <img id="waifu-img" src="/assets/images/waifu1.svg" alt="waifu" draggable="false">
+    </div>
+    <div id="waifu-name">🌸 Сакура</div>
+    <div id="tap-hint">— TAP —</div>
+  </div>
+  <div id="energy-wrap">
+    <div id="energy-bar">
+      <span id="energy-icon">⚡</span>
+      <div id="energy-track"><div id="energy-fill" style="width:100%"></div></div>
+      <span id="energy-text">100/100</span>
+    </div>
+  </div>
+  <div id="nav">
+    <button class="nav-btn" data-page="shop" onclick="openPage('shop')"><span class="nav-icon">🛍️</span><span>Магазин</span></button>
+    <button class="nav-btn" data-page="waifus" onclick="openPage('waifus')"><span class="nav-icon">🌸</span><span>Вайфу</span></button>
+    <button class="nav-btn" data-page="daily" onclick="openPage('daily')"><span class="nav-icon">🎁</span><span>Награды</span></button>
+    <button class="nav-btn" data-page="referral" onclick="openPage('referral')"><span class="nav-icon">🔗</span><span>Друзья</span></button>
+    <button class="nav-btn" data-page="leaderboard" onclick="openPage('leaderboard')"><span class="nav-icon">🏆</span><span>Топ</span></button>
+  </div>
+`;
 
 // ─── СОСТОЯНИЕ ───
 const state = { user: null, coins: 0, stars: 0, energy: 100, maxEnergy: 100, coinsPerTap: 1,
   totalTaps: 0, waifuId: 1, isGuest: false, tapLevel: 1 };
 let toastTimer = null;
+let adTimer = null;
 const WAIFUS = [
   { id: 1, name: 'Сакура', emoji: '🌸', rarity: '✨ Обычная', bonus: '+1 🪙 за тап', color: '#ff4488' },
   { id: 2, name: 'Микото', emoji: '⚡', rarity: '🔥 Редкая', bonus: '+2 🪙 за тап', color: '#4488ff' },
@@ -291,13 +375,11 @@ function fmtCoin(n) {
 
 // ─── ИНИЦИАЛИЗАЦИЯ ───
 async function init() {
-  // Telegram или гость?
   let guestMode = false;
   if (!TG) guestMode = true;
 
   if (!guestMode) {
     try {
-      // Таймаут 5 сек для Telegram auth
       const ctrl = new AbortController();
       const tm = setTimeout(() => ctrl.abort(), 5000);
       const r = await fetch('/api/auth', { method:'POST', headers:{'Content-Type':'application/json'},
@@ -325,21 +407,23 @@ async function init() {
     } catch(e) {}
   }
 
-  // Загружаем данные
   loadShop();
   loadWaifus();
   loadLB();
   loadDaily();
 
-  // Реклама раз в 2 минуты
-  setTimeout(() => { const b = document.getElementById('adBanner'); if(b) b.style.display='flex'; }, 120000);
-  setInterval(() => { const b = document.getElementById('adBanner'); if(b) b.style.display='flex'; }, 120000);
+  // Реклама раз в 3 минуты
+  setTimeout(showAdBanner, 180000);
+  setInterval(showAdBanner, 180000);
 
-  // Сообщаем Telegram что загрузились (даже если ошибка — скрываем спиннер)
   if (TG) TG.ready();
 
-  // Телефонная вибрация на тап
   document.getElementById('waifu-wrap').addEventListener('click', onTap);
+}
+
+function showAdBanner() {
+  const b = document.getElementById('adBanner');
+  if (b && state.user) b.style.display = 'flex';
 }
 
 function applyUser(u) {
@@ -374,26 +458,23 @@ async function onTap(e) {
   if (!state.user) { showToast('⏳ Загрузка...'); return; }
   if (state.energy < 1) { showToast('⚡ Нет энергии! Купи в магазине'); return; }
 
-  // Минус энергия
   state.energy = Math.max(0, state.energy - 1);
   const earn = state.coinsPerTap * (state.waifuId === 5 ? 2 : 1);
   state.coins += earn;
   updateHUD();
 
-  // Партиклы
-  spawnParticles(e, earn);
+  // Элегантный эффект тапа — 1 частица + ripple
+  spawnParticle(e, earn);
 
-  // Хептика
-  if (navigator.vibrate) navigator.vibrate(10);
+  if (navigator.vibrate) navigator.vibrate(8);
 
-  // Отправка на сервер
   try {
     await fetch('/api/tap', { method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ telegram_id: state.user.telegram_id }) });
   } catch(e) {}
 }
 
-function spawnParticles(e, amount) {
+function spawnParticle(e, amount) {
   const wrap = document.getElementById('waifu-wrap');
   const rect = wrap.getBoundingClientRect();
   const cx = e.clientX || rect.left + rect.width/2;
@@ -403,27 +484,24 @@ function spawnParticles(e, amount) {
   const el = document.createElement('div');
   el.className = 'tap-particle';
   el.textContent = '+🪙' + amount;
-  el.style.left = (cx - rect.left + (Math.random()-0.5)*40) + 'px';
-  el.style.top = (cy - rect.top + (Math.random()-0.5)*20) + 'px';
-  el.style.fontSize = (16 + Math.random()*10) + 'px';
+  el.style.left = (cx - rect.left + (Math.random()-0.5)*30) + 'px';
+  el.style.top = (cy - rect.top - 10) + 'px';
+  el.style.fontSize = (18 + Math.random()*8) + 'px';
+  el.style.color = '#ffd700';
   wrap.appendChild(el);
-  setTimeout(() => el.remove(), 1000);
+  setTimeout(() => el.remove(), 900);
 
-  // Несколько частиц
-  for (let i=0; i<3; i++) {
-    const p = document.createElement('div');
-    p.className = 'tap-particle';
-    p.textContent = ['✨','💫','🌸','⭐','❤️'][Math.floor(Math.random()*5)];
-    p.style.left = (cx - rect.left + (Math.random()-0.5)*60) + 'px';
-    p.style.top = (cy - rect.top + (Math.random()-0.5)*30) + 'px';
-    p.style.fontSize = (14+Math.random()*12) + 'px';
-    p.style.color = ['#ffd700','#f5c2e0','#ff69b4','#ff4488','#fff'][Math.floor(Math.random()*5)];
-    wrap.appendChild(p);
-    setTimeout(() => p.remove(), 1000);
-  }
+  // ripple effect
+  const ripple = document.createElement('div');
+  ripple.className = 'tap-ripple';
+  ripple.style.left = (cx - rect.left - 100) + 'px';
+  ripple.style.top = (cy - rect.top - 100) + 'px';
+  ripple.style.borderColor = 'rgba(255,105,180,0.3)';
+  wrap.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
 }
 
-// ─── ЭНЕРГИЯ (реген) ───
+// ─── ЭНЕРГИЯ ───
 setInterval(() => {
   if (!state.user || state.energy >= state.maxEnergy) return;
   const regenRate = state.isGuest ? 2 : 1;
@@ -437,13 +515,11 @@ function openPage(name) {
   const pp = document.getElementById('pp-' + name);
   if (ov) ov.classList.add('show');
   if (pp) pp.classList.add('show');
-  // Загружаем контент
   if (name === 'shop') loadShop();
   if (name === 'waifus') loadWaifus();
   if (name === 'daily') loadDaily();
   if (name === 'referral') loadRef();
   if (name === 'leaderboard') loadLB();
-  // Подсветка нав-кнопки
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector(`.nav-btn[data-page="${name}"]`);
   if (btn) btn.classList.add('active');
@@ -469,7 +545,7 @@ async function loadShop() {
 
 function renderShop() {
   const c = document.getElementById('shopContent');
-  if (!shopItems.length) { c.innerHTML = '<p style="text-align:center;color:#666;padding:20px;font-weight:600;">Магазин пуст</p>'; return; }
+  if (!shopItems.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-weight:800;font-family:Unbounded,sans-serif;">Магазин пуст</p>'; return; }
   c.innerHTML = '<div class="shop-grid">' + shopItems.map(item => {
     const isStar = item.price_type === 'stars';
     return `<div class="shop-card" onclick="buyItem(${item.id})">
@@ -518,7 +594,7 @@ async function loadWaifus() {
 
 function renderWaifus() {
   const c = document.getElementById('waifuContent');
-  if (!allWaifus.length) { c.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">Нет вайфу</p>'; return; }
+  if (!allWaifus.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Нет вайфу</p>'; return; }
   c.innerHTML = '<div class="waifu-grid">' + allWaifus.map(w => {
     const sel = w.id === state.waifuId;
     const waifu = WAIFUS.find(x => x.id === w.id) || {};
@@ -568,8 +644,8 @@ function renderDaily() {
   const next = dailyData.next_day || 1;
   const avail = dailyData.available || false;
   c.innerHTML = `<div style="text-align:center;margin-bottom:14px;">
-    <div style="font-size:36px;margin-bottom:4px;">📅</div>
-    <p style="font-size:13px;color:#aaa;font-weight:600;">Заходи каждый день и получай бонусы!</p>
+    <div style="font-size:40px;margin-bottom:6px;filter:drop-shadow(0 0 20px rgba(245,194,224,0.1));">📅</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:0.5px;">Заходи каждый день и получай бонусы!</p>
   </div>
   <div class="daily-grid">${DAILY.map(r => {
     let cls = 'd-day locked';
@@ -584,7 +660,7 @@ function renderDaily() {
   <button class="daily-btn" id="dailyBtn" onclick="claimDaily()" ${!avail?'disabled':''}>
     ${avail ? '🎁 Забрать!' : '✅ Уже сегодня'}
   </button>
-  <div style="text-align:center;margin-top:10px;font-size:12px;color:#888;font-weight:600;">
+  <div style="text-align:center;margin-top:12px;font-size:10px;color:rgba(255,255,255,0.15);font-weight:700;letter-spacing:0.5px;">
     ${avail ? `День ${next}/7 — награда готова!` : `Следующая: день ${next}/7`}
   </div>`;
 }
@@ -618,13 +694,13 @@ async function loadLB() {
 
 function renderLB(entries) {
   const c = document.getElementById('lbContent');
-  if (!entries.length) { c.innerHTML = '<p style="text-align:center;color:#666;padding:30px;font-weight:600;">Пока пусто 😢</p>'; return; }
+  if (!entries.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Пока пусто 😢</p>'; return; }
   c.innerHTML = entries.map((e, i) => {
     const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const me = state.user && e.telegram_id === state.user.telegram_id;
-    const pos = i<3 ? ['🥇','🥈','🥉'][i] : `<span style="font-weight:800;color:#555;">${i+1}</span>`;
+    const pos = i<3 ? ['🥇','🥈','🥉'][i] : `<span style="font-weight:800;color:rgba(255,255,255,0.15);font-family:Unbounded,sans-serif;">${i+1}</span>`;
     const em = e.waifu?.emoji || '🌸';
-    return `<div class="lb-entry" style="${me?'background:rgba(245,194,224,0.04);border-radius:8px;':''}">
+    return `<div class="lb-entry" style="${me?'background:rgba(245,194,224,0.02);border-radius:10px;':''}">
       <div class="lb-rank ${rc}">${pos}</div>
       <div class="lb-ava">${em}</div>
       <div class="lb-info">
@@ -639,7 +715,7 @@ function renderLB(entries) {
 // ─── РЕФЕРАЛЫ ───
 async function loadRef() {
   const c = document.getElementById('refContent');
-  if (!state.user) { c.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">Авторизуйся</p>'; return; }
+  if (!state.user) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Авторизуйся</p>'; return; }
   let refCount = 0, refBonus = 0;
   try {
     const r = await fetch('/api/referral/' + state.user.telegram_id);
@@ -653,11 +729,11 @@ async function loadRef() {
     <div class="ref-desc">Ты и друг получаете <b style="color:#ffd700;">+500 🪙</b><br>Чем больше друзей — тем больше бонус!</div>
     <div class="ref-stats">
       <div class="ref-stat"><div class="rs-v">${refCount}</div><div class="rs-l">Друзей</div></div>
-      <div class="ref-stat"><div class="rs-v" style="color:#ffd700;">🪙${fmtCoin(refBonus)}</div><div class="rs-l">Бонус</div></div>
+      <div class="ref-stat"><div class="rs-v" style="background:linear-gradient(135deg,#ffd700,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">🪙${fmtCoin(refBonus)}</div><div class="rs-l">Бонус</div></div>
     </div>
     <div class="ref-link-box">${link}</div>
     <button class="ref-copy-btn" onclick="copyRef('${link}')">📋 Копировать ссылку</button>
-    <p style="color:#555;font-size:11px;font-weight:600;margin-top:12px;">🔥 Кинь ссылку в чаты про аниме!</p>
+    <p style="color:rgba(255,255,255,0.1);font-size:10px;font-weight:700;margin-top:14px;letter-spacing:0.5px;">🔥 Кинь ссылку в чаты про аниме!</p>
   </div>`;
 }
 
@@ -673,6 +749,59 @@ function copyRef(link) {
     document.body.removeChild(el);
     showToast('✅ Ссылка скопирована!');
   }
+}
+
+// ─── РЕКЛАМА ───
+let adCountdown = 0;
+let adActive = false;
+
+function openAd() {
+  if (!state.user || adActive) return;
+  adActive = true;
+  document.getElementById('adBanner').style.display = 'none';
+  document.getElementById('adModal').classList.add('show');
+  document.getElementById('adSkipBtn').style.display = 'block';
+  document.getElementById('adCloseBtn').style.display = 'none';
+  document.getElementById('adReward').textContent = '+100 🪙 после просмотра';
+  document.getElementById('adLabel').textContent = 'Реклама';
+  startAdCountdown();
+}
+
+function startAdCountdown() {
+  let sec = 5;
+  document.getElementById('adTimer').textContent = sec;
+  clearInterval(adTimer);
+  adTimer = setInterval(() => {
+    sec--;
+    if (sec <= 0) {
+      clearInterval(adTimer);
+      document.getElementById('adTimer').textContent = '✅';
+      document.getElementById('adLabel').textContent = 'Реклама завершена!';
+      document.getElementById('adSkipBtn').style.display = 'none';
+      document.getElementById('adCloseBtn').style.display = 'block';
+      document.getElementById('adReward').textContent = '🎉 +100 🪙 получено!';
+      // Даём награду
+      state.coins += 100;
+      updateHUD();
+      // Сохраняем на сервере
+      fetch('/api/tap', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ telegram_id: state.user.telegram_id }) });
+      showToast('🎬 +100 🪙 за рекламу!');
+    } else {
+      document.getElementById('adTimer').textContent = sec;
+    }
+  }, 1000);
+}
+
+function skipAd() {
+  clearInterval(adTimer);
+  closeAd();
+  showToast('⏭ Реклама пропущена');
+}
+
+function closeAd() {
+  document.getElementById('adModal').classList.remove('show');
+  adActive = false;
 }
 
 // ─── ТОСТ ───
