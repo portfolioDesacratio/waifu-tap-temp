@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="150" cy="150" r="145"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle)">
+    <!-- Skin -->
+    <rect x="0" y="0" width="300" height="300" fill="#FDE8D0"/>
+    <!-- Hair back -->
+    <ellipse cx="150" cy="155" rx="112" ry="128" fill="#F06088"/>
+    <ellipse cx="150" cy="152" rx="106" ry="122" fill="#FF88B0"/>
+    <!-- Face -->
+    <ellipse cx="150" cy="168" rx="64" ry="74" fill="#FDE8D0"/>
+    <!-- Neck -->
+    <rect x="130" y="230" width="40" height="26" fill="#FDE8D0"/>
+    <rect x="133" y="232" width="34" height="6" fill="#EDD0B0" opacity="0.4"/>
+    <!-- Body / Uniform -->
+    <rect x="86" y="244" width="128" height="66" rx="10" fill="#222240"/>
+    <rect x="86" y="244" width="128" height="66" rx="10" fill="#2A2A4E" opacity="0.4"/>
+    <!-- Uniform collar -->
+    <path d="M122 244 Q150 260 178 244" fill="none" stroke="#444" stroke-width="2.5"/>
+    <path d="M125 244 Q150 258 175 244" fill="white" stroke="#EEE" stroke-width="1"/>
+    <!-- Red tie -->
+    <polygon points="143,254 157,254 160,300 150,306 140,300" fill="#CC2233"/>
+    <polygon points="145,254 155,254 157,290 150,296 143,290" fill="#DD3344"/>
+    <!-- Tie stripes -->
+    <line x1="148" y1="265" x2="148" y2="285" stroke="#AA1122" stroke-width="1.5" opacity="0.6"/>
+    <line x1="152" y1="265" x2="152" y2="285" stroke="#AA1122" stroke-width="1.5" opacity="0.6"/>
+    <!-- Horns -->
+    <path d="M112 90 Q92 70 90 48 Q88 36 100 48 Q108 60 118 78" fill="#CC2233" stroke="#AA1122" stroke-width="2"/>
+    <path d="M188 90 Q208 70 210 48 Q212 36 200 48 Q192 60 182 78" fill="#CC2233" stroke="#AA1122" stroke-width="2"/>
+    <path d="M100 60 Q96 52 104 52" fill="none" stroke="#FF5566" stroke-width="1.5" opacity="0.6"/>
+    <path d="M200 60 Q204 52 196 52" fill="none" stroke="#FF5566" stroke-width="1.5" opacity="0.6"/>
+    <!-- Hair long -->
+    <path d="M84 136 Q84 56 150 44 Q216 56 216 136" fill="#FF88B0"/>
+    <path d="M88 136 Q88 62 150 50 Q212 62 212 136" fill="#FFA0C0"/>
+    <!-- Hair flowing -->
+    <path d="M84 136 Q76 180 84 240" fill="none" stroke="#FF88B0" stroke-width="24" stroke-linecap="round"/>
+    <path d="M216 136 Q224 180 216 240" fill="none" stroke="#FF88B0" stroke-width="24" stroke-linecap="round"/>
+    <path d="M84 150 Q76 190 82 238" fill="none" stroke="#FFA0C0" stroke-width="10" stroke-linecap="round"/>
+    <path d="M216 150 Q224 190 218 238" fill="none" stroke="#FFA0C0" stroke-width="10" stroke-linecap="round"/>
+    <!-- Hair strand over left eye -->
+    <path d="M84 136 Q84 78 116 74 Q126 72 134 82 Q140 92 128 106 Q120 114 130 136" fill="#FF88B0"/>
+    <path d="M88 136 Q88 82 116 78 Q124 76 130 84 Q134 92 124 104 Q118 110 128 136" fill="#FFA0C0"/>
+    <!-- Hair highlights -->
+    <path d="M170 80 Q180 78 188 86" fill="none" stroke="#FFC0D0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M150 60 Q155 52 162 55" fill="none" stroke="#FFC0D0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    <!-- Eyes - blue -->
+    <!-- Left eye (partially covered) -->
+    <ellipse cx="118" cy="166" rx="13" ry="15" fill="white"/>
+    <ellipse cx="118" cy="168" rx="11" ry="12" fill="#4A9BD4"/>
+    <ellipse cx="118" cy="171" rx="7" ry="8" fill="#2A7BB4"/>
+    <ellipse cx="118" cy="173" rx="4" ry="5" fill="#1A5B94"/>
+    <circle cx="115" cy="163" r="4" fill="white"/>
+    <circle cx="122" cy="174" r="2" fill="white"/>
+    <!-- Right eye -->
+    <ellipse cx="180" cy="166" rx="17" ry="19" fill="white"/>
+    <ellipse cx="180" cy="168" rx="15" ry="16" fill="#4A9BD4"/>
+    <ellipse cx="180" cy="171" rx="11" ry="12" fill="#2A7BB4"/>
+    <ellipse cx="180" cy="173" rx="6" ry="7" fill="#1A5B94"/>
+    <circle cx="175" cy="162" r="5" fill="white"/>
+    <circle cx="186" cy="174" r="3" fill="white"/>
+    <circle cx="170" cy="166" r="2" fill="white" opacity="0.5"/>
+    <!-- Eyebrows -->
+    <path d="M104 146 Q118 141 132 145" fill="none" stroke="#D06080" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M160 144 Q180 139 198 148" fill="none" stroke="#D06080" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Confident smile -->
+    <path d="M136 190 Q150 200 164 190" fill="none" stroke="#CC4466" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M164 190 Q170 186 174 192" fill="none" stroke="#CC4466" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="108" cy="184" rx="12" ry="6" fill="#FF8C8C" opacity="0.35"/>
+    <ellipse cx="194" cy="184" rx="12" ry="6" fill="#FF8C8C" opacity="0.35"/>
+    <!-- Fill bottom -->
+    <rect x="0" y="285" width="300" height="15" fill="#222240"/>
+    <!-- Decor ring -->
+    <circle cx="150" cy="150" r="135" fill="none" stroke="#FF88B0" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="150" cy="150" r="125" fill="none" stroke="#CC2233" stroke-width="0.5" opacity="0.15"/>
+  </g>
+  <!-- Border -->
+  <circle cx="150" cy="150" r="145" fill="none" stroke="#F06088" stroke-width="3"/>
+</svg>

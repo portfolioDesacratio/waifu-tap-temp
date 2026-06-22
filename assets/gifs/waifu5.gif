@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b008b"/>
+      <stop offset="100%" style="stop-color:#9370db"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4b0082"/>
+      <stop offset="100%" style="stop-color:#8a2be2"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f001a"/>
+      <stop offset="100%" style="stop-color:#0a0012"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="250" r="180" fill="url(#bg)" opacity="0.3"/>
+  <circle cx="200" cy="250" r="160" fill="none" stroke="#9370db" stroke-width="1" opacity="0.1"/>
+  <ellipse cx="200" cy="220" rx="90" ry="110" fill="url(#hair)" opacity="0.8"/>
+  <ellipse cx="200" cy="220" rx="65" ry="75" fill="#fce4ec"/>
+  <!-- Dull red/purple eyes -->
+  <ellipse cx="175" cy="205" rx="18" ry="20" fill="#fff"/>
+  <ellipse cx="225" cy="205" rx="18" ry="20" fill="#fff"/>
+  <ellipse cx="178" cy="207" rx="10" ry="12" fill="#9370db"/>
+  <ellipse cx="222" cy="207" rx="10" ry="12" fill="#9370db"/>
+  <ellipse cx="178" cy="207" rx="5" ry="8" fill="#1a0f1a"/>
+  <ellipse cx="222" cy="207" rx="5" ry="8" fill="#1a0f1a"/>
+  <circle cx="172" cy="202" r="3" fill="#fff" opacity="0.8"/>
+  <circle cx="219" cy="202" r="3" fill="#fff" opacity="0.8"/>
+  <ellipse cx="165" cy="235" rx="12" ry="6" fill="#9370db" opacity="0.3"/>
+  <ellipse cx="235" cy="235" rx="12" ry="6" fill="#9370db" opacity="0.3"/>
+  <path d="M190,240 Q200,248 210,240" fill="none" stroke="#b06a6a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M140,200 Q135,150 160,120 Q180,100 200,110 Q220,100 240,120 Q265,150 260,200" fill="url(#hair)" opacity="0.9"/>
+  <path d="M160,130 Q180,120 195,150 Q200,160 205,150 Q220,120 240,130 Q230,170 200,175 Q170,170 160,130Z" fill="url(#hair)" />
+  <!-- Long flowing hair -->
+  <path d="M135,180 Q120,250 125,330" fill="none" stroke="url(#hair)" stroke-width="10" stroke-linecap="round" opacity="0.5"/>
+  <path d="M265,180 Q280,250 275,330" fill="none" stroke="url(#hair)" stroke-width="10" stroke-linecap="round" opacity="0.5"/>
+  <!-- Gothic headband -->
+  <path d="M130,185 Q165,175 200,178 Q235,175 270,185" fill="none" stroke="#f5c2e0" stroke-width="2" opacity="0.5"/>
+  <!-- Rose hair accessory -->
+  <circle cx="145" cy="175" r="8" fill="#8b008b" opacity="0.6"/>
+  <path d="M140,170 Q145,165 150,170 Q155,175 150,180 Q145,185 140,180 Q135,175 140,170Z" fill="#f5c2e0" opacity="0.4"/>
+  <circle cx="255" cy="175" r="8" fill="#8b008b" opacity="0.6"/>
+  <path d="M250,170 Q255,165 260,170 Q265,175 260,180 Q255,185 250,180 Q245,175 250,170Z" fill="#f5c2e0" opacity="0.4"/>
+  <path d="M135,185 Q115,175 120,165 Q130,170 140,175Z" fill="#9370db"/>
+  <path d="M265,185 Q285,175 280,165 Q270,170 260,175Z" fill="#9370db"/>
+  <rect x="188" y="280" width="24" height="20" rx="5" fill="#fce4ec"/>
+  <!-- Dress with gothic lace -->
+  <path d="M145,300 L255,300 Q265,380 270,470 L130,470 Q135,380 145,300Z" fill="url(#dress)" opacity="0.9"/>
+  <path d="M185,300 L200,330 L215,300Z" fill="#f5c2e0" opacity="0.15"/>
+  <!-- Lace trim -->
+  <path d="M140,310 Q145,315 150,310 Q155,315 160,310 Q165,315 170,310 Q175,315 180,310 Q185,315 190,310 Q195,315 200,310 Q205,315 210,310 Q215,315 220,310 Q225,315 230,310 Q235,315 240,310 Q245,315 250,310 Q255,315 260,310" fill="none" stroke="#f5c2e0" stroke-width="1" opacity="0.3"/>
+  <path d="M200,340 Q185,330 180,340 Q185,350 200,340Z" fill="#9370db"/>
+  <path d="M200,340 Q215,330 220,340 Q215,350 200,340Z" fill="#9370db"/>
+  <circle cx="200" cy="340" r="4" fill="#f5c2e0"/>
+  <path d="M145,310 Q120,340 115,380" fill="none" stroke="url(#dress)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M255,310 Q280,340 285,380" fill="none" stroke="url(#dress)" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="115" cy="380" r="10" fill="#fce4ec"/>
+  <circle cx="285" cy="380" r="10" fill="#fce4ec"/>
+  <rect x="155" y="360" width="90" height="18" rx="9" fill="#9370db" opacity="0.2"/>
+  <text x="200" y="374" text-anchor="middle" fill="#f5c2e0" font-size="12" font-family="serif">Цукико</text>
+  <!-- Purple sparks -->
+  <circle cx="100" cy="150" r="3" fill="#f5c2e0" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="130" r="2" fill="#9370db" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="320" cy="200" r="2.5" fill="#f5c2e0" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="230" r="2" fill="#ffd700" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Butterflies -->
+  <path d="M320,160 Q325,155 330,160 Q325,165 320,160Z" fill="#f5c2e0" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.3s" repeatCount="indefinite"/>
+  </path>
+  <path d="M75,180 Q80,175 85,180 Q80,185 75,180Z" fill="#9370db" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.7s" repeatCount="indefinite"/>
+  </path>
+  <!-- Moon crescent -->
+  <path d="M320,90 Q335,100 330,115" fill="none" stroke="#f5c2e0" stroke-width="1.5" opacity="0.2"/>
+</svg>

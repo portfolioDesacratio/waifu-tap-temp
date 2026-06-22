@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="150" cy="150" r="145"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle)">
+    <!-- Skin -->
+    <rect x="0" y="0" width="300" height="300" fill="#F5F0E8"/>
+    <!-- Hair back -->
+    <ellipse cx="150" cy="160" rx="105" ry="120" fill="#6B8DB5"/>
+    <ellipse cx="150" cy="158" rx="98" ry="115" fill="#7B9DC5"/>
+    <!-- Face -->
+    <ellipse cx="150" cy="170" rx="64" ry="74" fill="#F5F0E8"/>
+    <!-- Neck -->
+    <rect x="130" y="232" width="40" height="26" fill="#F5F0E8"/>
+    <rect x="133" y="234" width="34" height="6" fill="#E5E0D8" opacity="0.4"/>
+    <!-- Body / Plugsuit white -->
+    <rect x="92" y="244" width="116" height="66" rx="10" fill="#E8E8E8"/>
+    <rect x="92" y="244" width="116" height="66" rx="10" fill="#F0F0F0" opacity="0.4"/>
+    <!-- Plugsuit shoulders -->
+    <path d="M92 252 Q70 240 60 260 L60 310 L92 310 Z" fill="#E8E8E8"/>
+    <path d="M208 252 Q230 240 240 260 L240 310 L208 310 Z" fill="#E8E8E8"/>
+    <!-- Plugsuit dark accents -->
+    <rect x="92" y="258" width="116" height="5" rx="2" fill="#C0C8D0"/>
+    <rect x="92" y="274" width="116" height="5" rx="2" fill="#C0C8D0"/>
+    <rect x="92" y="288" width="116" height="5" rx="2" fill="#C0C8D0"/>
+    <!-- Plugsuit collar -->
+    <path d="M122 244 Q150 230 178 244" fill="none" stroke="#C0C8D0" stroke-width="3"/>
+    <path d="M126 244 Q150 232 174 244" fill="#E8E8E8"/>
+    <!-- Plugsuit zipper -->
+    <line x1="150" y1="244" x2="150" y2="310" stroke="#AAA" stroke-width="2"/>
+    <circle cx="150" cy="244" r="3" fill="#999"/>
+    <!-- Hair bangs -->
+    <path d="M86 138 Q86 70 150 60 Q214 70 214 138" fill="#6B8DB5"/>
+    <path d="M90 138 Q90 75 150 65 Q210 75 210 138" fill="#7B9DC5"/>
+    <!-- Straight bangs -->
+    <path d="M92 138 Q92 90 150 82 Q208 90 208 138" fill="#8BADD5" opacity="0.6"/>
+    <!-- Hair highlights -->
+    <path d="M115 95 Q120 88 128 85" fill="none" stroke="#A0C0E0" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <path d="M172 85 Q180 88 185 95" fill="none" stroke="#A0C0E0" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <!-- Side hair left -->
+    <path d="M86 138 Q80 178 88 230" fill="none" stroke="#6B8DB5" stroke-width="20" stroke-linecap="round"/>
+    <path d="M88 138 Q82 176 90 228" fill="none" stroke="#7B9DC5" stroke-width="16" stroke-linecap="round"/>
+    <!-- Side hair right -->
+    <path d="M214 138 Q220 178 212 230" fill="none" stroke="#6B8DB5" stroke-width="20" stroke-linecap="round"/>
+    <path d="M212 138 Q218 176 210 228" fill="none" stroke="#7B9DC5" stroke-width="16" stroke-linecap="round"/>
+    <!-- Eyes - calm -->
+    <!-- Left eye -->
+    <ellipse cx="123" cy="168" rx="15" ry="17" fill="white"/>
+    <ellipse cx="123" cy="170" rx="13" ry="14" fill="#CC4444"/>
+    <ellipse cx="123" cy="173" rx="9" ry="10" fill="#AA2222"/>
+    <ellipse cx="123" cy="175" rx="5" ry="6" fill="#881111"/>
+    <circle cx="119" cy="165" r="4.5" fill="white"/>
+    <circle cx="128" cy="176" r="2.2" fill="white"/>
+    <!-- Right eye -->
+    <ellipse cx="177" cy="168" rx="15" ry="17" fill="white"/>
+    <ellipse cx="177" cy="170" rx="13" ry="14" fill="#CC4444"/>
+    <ellipse cx="177" cy="173" rx="9" ry="10" fill="#AA2222"/>
+    <ellipse cx="177" cy="175" rx="5" ry="6" fill="#881111"/>
+    <circle cx="173" cy="165" r="4.5" fill="white"/>
+    <circle cx="182" cy="176" r="2.2" fill="white"/>
+    <!-- Eyebrows - calm -->
+    <line x1="105" y1="150" x2="141" y2="148" stroke="#4A6B8A" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="159" y1="148" x2="195" y2="150" stroke="#4A6B8A" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Eyes half-lidded (calm look) -->
+    <path d="M108 164 Q123 160 138 164" fill="none" stroke="#6B8DB5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M162 164 Q177 160 192 164" fill="none" stroke="#6B8DB5" stroke-width="1.5" opacity="0.4"/>
+    <!-- Mouth -->
+    <path d="M138 192 Q150 197 162 192" fill="none" stroke="#D4888A" stroke-width="2" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="112" cy="187" rx="12" ry="6" fill="#FFC8C8" opacity="0.35"/>
+    <ellipse cx="188" cy="187" rx="12" ry="6" fill="#FFC8C8" opacity="0.35"/>
+    <!-- Fill bottom -->
+    <rect x="0" y="285" width="300" height="15" fill="#E8E8E8"/>
+    <!-- Decor ring -->
+    <circle cx="150" cy="150" r="135" fill="none" stroke="#7B9DC5" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="150" cy="150" r="125" fill="none" stroke="#6B8DB5" stroke-width="0.5" opacity="0.2"/>
+  </g>
+  <!-- Border -->
+  <circle cx="150" cy="150" r="145" fill="none" stroke="#6B8DB5" stroke-width="3"/>
+</svg>
