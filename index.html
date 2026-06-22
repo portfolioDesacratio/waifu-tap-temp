@@ -385,7 +385,7 @@ document.getElementById('app').innerHTML = `
   </div>
   <div id="game">
     <div id="waifu-wrap">
-      <img id="waifu-img" src="/assets/images/waifu1.svg" alt="waifu" draggable="false">
+      <img id="waifu-img" src="assets/images/waifu1.svg" alt="waifu" draggable="false">
     </div>
     <div id="waifu-name">🌸 Сакура</div>
     <div id="tap-hint">— TAP —</div>
@@ -504,7 +504,7 @@ function applyUser(u) {
 
 function setWaifu(id) {
   const w = WAIFUS.find(x => x.id === id) || WAIFUS[0];
-  document.getElementById('waifu-img').src = '/assets/images/waifu' + id + '.svg?' + Date.now();
+  document.getElementById('waifu-img').src = 'assets/images/waifu' + id + '.svg?' + Date.now();
   document.getElementById('waifu-name').textContent = w.emoji + ' ' + w.name;
 }
 
@@ -706,7 +706,7 @@ function renderWaifus() {
       actionHtml = `<div class="w-badge locked-badge">🔒 ${lockText}</div>`;
     }
     return `<div class="waifu-card${sel?' selected':''}" onclick="selectWaifu(${w.id})">
-      <div class="w-img-wrap"><img src="/assets/images/waifu${w.id}.svg" alt="${waifu.name||w.name}" loading="lazy"></div>
+      <div class="w-img-wrap"><img src="assets/images/waifu${w.id}.svg" alt="${waifu.name||w.name}" loading="lazy"></div>
       <div class="w-info">
         <div class="w-name">${waifu.emoji||''} ${waifu.name||w.name}</div>
         <div class="w-rarity" style="color:${waifu.color||'#888'}">${waifu.rarity||'Обычная'}</div>
