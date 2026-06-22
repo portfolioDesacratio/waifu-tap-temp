@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="150" cy="150" r="145"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle)">
+    <!-- Skin -->
+    <rect x="0" y="0" width="300" height="300" fill="#FDE8D0"/>
+    <!-- Hair back -->
+    <ellipse cx="150" cy="160" rx="108" ry="122" fill="#BB1100"/>
+    <ellipse cx="150" cy="155" rx="102" ry="118" fill="#CC2200"/>
+    <!-- Face -->
+    <ellipse cx="150" cy="170" rx="66" ry="76" fill="#FDE8D0"/>
+    <!-- Neck -->
+    <rect x="128" y="234" width="44" height="26" fill="#FDE8D0"/>
+    <rect x="132" y="236" width="36" height="6" fill="#EDD0B0" opacity="0.4"/>
+    <!-- Body / shirt -->
+    <rect x="85" y="246" width="130" height="64" rx="12" fill="#F5F5F5"/>
+    <rect x="85" y="246" width="130" height="64" rx="12" fill="#FAFAFA" opacity="0.4"/>
+    <!-- Shirt collar open -->
+    <path d="M126 246 Q150 272 174 246" fill="none" stroke="#CC2200" stroke-width="2.5"/>
+    <path d="M128 246 L150 270 L172 246" fill="#F5F5F5" stroke="#DDD" stroke-width="1"/>
+    <!-- Tie -->
+    <polygon points="144,256 156,256 159,300 150,306 141,300" fill="#CC2200"/>
+    <polygon points="146,256 154,256 156,290 150,296 144,290" fill="#DD2A00"/>
+    <!-- Shirt buttons -->
+    <circle cx="150" cy="278" r="2.5" fill="#CC2200"/>
+    <circle cx="150" cy="290" r="2.5" fill="#CC2200"/>
+    <!-- Devil horns -->
+    <path d="M112 92 Q95 78 100 60 Q102 50 115 68" fill="#666" stroke="#555" stroke-width="2"/>
+    <path d="M188 92 Q205 78 200 60 Q198 50 185 68" fill="#666" stroke="#555" stroke-width="2"/>
+    <path d="M105 75 Q100 68 108 65" fill="none" stroke="#888" stroke-width="1.5" opacity="0.5"/>
+    <path d="M195 75 Q200 68 192 65" fill="none" stroke="#888" stroke-width="1.5" opacity="0.5"/>
+    <!-- Hair bangs wild -->
+    <path d="M84 136 Q84 60 150 48 Q216 60 216 136" fill="#CC2200"/>
+    <path d="M88 136 Q88 65 150 54 Q212 65 212 136" fill="#DD2A00"/>
+    <!-- Messy hair spikes -->
+    <polygon points="88,108 76,85 98,98" fill="#CC2200"/>
+    <polygon points="110,78 104,55 122,74" fill="#CC2200"/>
+    <polygon points="102,86 94,68 110,80" fill="#DD2A00"/>
+    <polygon points="190,78 196,55 178,74" fill="#CC2200"/>
+    <polygon points="198,86 206,68 190,80" fill="#DD2A00"/>
+    <polygon points="212,108 224,85 202,98" fill="#CC2200"/>
+    <!-- Ahoge (cowlick) -->
+    <path d="M148 48 Q142 25 155 15 Q162 8 158 22" fill="none" stroke="#CC2200" stroke-width="6" stroke-linecap="round"/>
+    <path d="M150 48 Q146 30 156 20" fill="none" stroke="#DD2A00" stroke-width="4" stroke-linecap="round"/>
+    <!-- Hair highlights -->
+    <path d="M105 100 Q110 90 118 88" fill="none" stroke="#FF5544" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <path d="M182 88 Q190 90 195 100" fill="none" stroke="#FF5544" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <!-- Side hair -->
+    <path d="M84 136 Q78 178 88 230" fill="none" stroke="#CC2200" stroke-width="22" stroke-linecap="round"/>
+    <path d="M216 136 Q222 178 212 230" fill="none" stroke="#CC2200" stroke-width="22" stroke-linecap="round"/>
+    <!-- Eyes - wild yellow -->
+    <!-- Left eye -->
+    <ellipse cx="120" cy="164" rx="17" ry="19" fill="white"/>
+    <ellipse cx="120" cy="166" rx="15" ry="16" fill="#FFD700"/>
+    <ellipse cx="120" cy="169" rx="11" ry="12" fill="#CC9900"/>
+    <ellipse cx="120" cy="171" rx="6" ry="7" fill="#AA7700"/>
+    <circle cx="115" cy="160" r="5.5" fill="white"/>
+    <circle cx="126" cy="172" r="3" fill="white"/>
+    <circle cx="110" cy="164" r="2" fill="white" opacity="0.5"/>
+    <!-- Right eye -->
+    <ellipse cx="180" cy="164" rx="17" ry="19" fill="white"/>
+    <ellipse cx="180" cy="166" rx="15" ry="16" fill="#FFD700"/>
+    <ellipse cx="180" cy="169" rx="11" ry="12" fill="#CC9900"/>
+    <ellipse cx="180" cy="171" rx="6" ry="7" fill="#AA7700"/>
+    <circle cx="175" cy="160" r="5.5" fill="white"/>
+    <circle cx="186" cy="172" r="3" fill="white"/>
+    <circle cx="190" cy="164" r="2" fill="white" opacity="0.5"/>
+    <!-- Eyebrows -->
+    <path d="M100 144 Q114 134 138 140" fill="none" stroke="#881100" stroke-width="3" stroke-linecap="round"/>
+    <path d="M162 140 Q186 134 200 144" fill="none" stroke="#881100" stroke-width="3" stroke-linecap="round"/>
+    <!-- Wild grin -->
+    <path d="M120 190 Q138 204 150 198 Q162 204 180 190" fill="none" stroke="#CC4444" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M130 194 Q138 200 145 196" fill="none" stroke="#CC4444" stroke-width="1.5"/>
+    <path d="M155 196 Q162 200 170 194" fill="none" stroke="#CC4444" stroke-width="1.5"/>
+    <!-- Fangs -->
+    <polygon points="132,194 136,194 134,202" fill="white" stroke="#CC4444" stroke-width="0.5"/>
+    <polygon points="164,194 168,194 166,202" fill="white" stroke="#CC4444" stroke-width="0.5"/>
+    <!-- Blush -->
+    <ellipse cx="104" cy="184" rx="14" ry="8" fill="#FF8C8C" opacity="0.5"/>
+    <ellipse cx="196" cy="184" rx="14" ry="8" fill="#FF8C8C" opacity="0.5"/>
+    <!-- Blood drops -->
+    <ellipse cx="138" cy="210" rx="2.5" ry="4.5" fill="#CC2200" opacity="0.5"/>
+    <ellipse cx="162" cy="208" rx="2" ry="3.5" fill="#CC2200" opacity="0.5"/>
+    <ellipse cx="154" cy="212" rx="1.5" ry="2.5" fill="#CC2200" opacity="0.4"/>
+    <!-- Fill bottom -->
+    <rect x="0" y="285" width="300" height="15" fill="#F5F5F5"/>
+    <!-- Decor ring -->
+    <circle cx="150" cy="150" r="135" fill="none" stroke="#CC2200" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="150" cy="150" r="125" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.15"/>
+  </g>
+  <!-- Border -->
+  <circle cx="150" cy="150" r="145" fill="none" stroke="#BB1100" stroke-width="3"/>
+</svg>

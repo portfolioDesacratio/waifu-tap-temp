@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="150" cy="150" r="145"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle)">
+    <!-- Skin -->
+    <rect x="0" y="0" width="300" height="300" fill="#FDE8D0"/>
+    <!-- Hair back -->
+    <ellipse cx="150" cy="155" rx="102" ry="122" fill="#18182A"/>
+    <ellipse cx="150" cy="152" rx="96" ry="118" fill="#282840"/>
+    <!-- Face -->
+    <ellipse cx="150" cy="168" rx="62" ry="72" fill="#FDE8D0"/>
+    <!-- Neck -->
+    <rect x="131" y="228" width="38" height="26" fill="#FDE8D0"/>
+    <rect x="134" y="230" width="32" height="6" fill="#EDD0B0" opacity="0.4"/>
+    <!-- Body / Soul Reaper robes -->
+    <rect x="90" y="242" width="120" height="68" rx="10" fill="#18182A"/>
+    <rect x="90" y="242" width="120" height="68" rx="10" fill="#222238" opacity="0.4"/>
+    <!-- Robe top white -->
+    <path d="M118 242 L150 258 L182 242" fill="white" stroke="#EEE" stroke-width="1"/>
+    <path d="M122 242 L150 255 L178 242" fill="#FAFAFA"/>
+    <!-- Inner robe gray -->
+    <rect x="130" y="252" width="40" height="22" rx="3" fill="#888"/>
+    <rect x="132" y="254" width="36" height="18" rx="2" fill="#999"/>
+    <!-- Obi/sash -->
+    <rect x="90" y="262" width="120" height="6" rx="2" fill="#E0E0E0"/>
+    <rect x="90" y="268" width="120" height="4" rx="1" fill="#CCC"/>
+    <!-- Hair short -->
+    <path d="M88 134 Q88 62 150 54 Q212 62 212 134" fill="#18182A"/>
+    <path d="M92 134 Q92 68 150 60 Q208 68 208 134" fill="#282840"/>
+    <!-- Spiky hair strands -->
+    <polygon points="98,110 92,88 106,100" fill="#18182A"/>
+    <polygon points="110,86 106,68 118,84" fill="#18182A"/>
+    <polygon points="190,86 194,68 182,84" fill="#18182A"/>
+    <polygon points="202,110 208,88 194,100" fill="#18182A"/>
+    <polygon points="150,54 147,40 155,50" fill="#282840"/>
+    <!-- Hair highlights -->
+    <path d="M108 98 Q112 90 118 88" fill="none" stroke="#444468" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <path d="M182 88 Q188 90 192 98" fill="none" stroke="#444468" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <!-- Side hair -->
+    <path d="M88 134 Q82 166 90 220" fill="none" stroke="#18182A" stroke-width="18" stroke-linecap="round"/>
+    <path d="M212 134 Q218 166 210 220" fill="none" stroke="#18182A" stroke-width="18" stroke-linecap="round"/>
+    <path d="M90 134 Q84 164 92 218" fill="none" stroke="#282840" stroke-width="14" stroke-linecap="round"/>
+    <path d="M210 134 Q216 164 208 218" fill="none" stroke="#282840" stroke-width="14" stroke-linecap="round"/>
+    <!-- Eyes - purple -->
+    <!-- Left eye -->
+    <ellipse cx="124" cy="166" rx="15" ry="17" fill="white"/>
+    <ellipse cx="124" cy="168" rx="13" ry="14" fill="#9B59B6"/>
+    <ellipse cx="124" cy="171" rx="9" ry="10" fill="#7D3C98"/>
+    <ellipse cx="124" cy="173" rx="5" ry="6" fill="#5B1A7A"/>
+    <circle cx="119" cy="163" r="4.5" fill="white"/>
+    <circle cx="129" cy="174" r="2.2" fill="white"/>
+    <circle cx="114" cy="166" r="1.5" fill="white" opacity="0.5"/>
+    <!-- Right eye -->
+    <ellipse cx="176" cy="166" rx="15" ry="17" fill="white"/>
+    <ellipse cx="176" cy="168" rx="13" ry="14" fill="#9B59B6"/>
+    <ellipse cx="176" cy="171" rx="9" ry="10" fill="#7D3C98"/>
+    <ellipse cx="176" cy="173" rx="5" ry="6" fill="#5B1A7A"/>
+    <circle cx="171" cy="163" r="4.5" fill="white"/>
+    <circle cx="181" cy="174" r="2.2" fill="white"/>
+    <circle cx="186" cy="166" r="1.5" fill="white" opacity="0.5"/>
+    <!-- Eyebrows -->
+    <path d="M106 148 Q124 142 142 147" fill="none" stroke="#111122" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M158 147 Q176 142 194 148" fill="none" stroke="#111122" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Mouth -->
+    <path d="M140 188 Q150 193 160 188" fill="none" stroke="#D4888A" stroke-width="2" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="112" cy="184" rx="11" ry="5" fill="#FFB5B5" opacity="0.3"/>
+    <ellipse cx="188" cy="184" rx="11" ry="5" fill="#FFB5B5" opacity="0.3"/>
+    <!-- Fill bottom -->
+    <rect x="0" y="285" width="300" height="15" fill="#18182A"/>
+    <!-- Decor ring -->
+    <circle cx="150" cy="150" r="135" fill="none" stroke="#282840" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="150" cy="150" r="125" fill="none" stroke="#9B59B6" stroke-width="0.5" opacity="0.15"/>
+  </g>
+  <!-- Border -->
+  <circle cx="150" cy="150" r="145" fill="none" stroke="#18182A" stroke-width="3"/>
+</svg>

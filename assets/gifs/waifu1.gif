@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff69b4"/>
+      <stop offset="100%" style="stop-color:#f5c2e0"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5c2e0"/>
+      <stop offset="100%" style="stop-color:#ff69b4"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0f1a"/>
+      <stop offset="100%" style="stop-color:#0d0a12"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="250" r="180" fill="url(#bg)" opacity="0.3"/>
+  <circle cx="200" cy="250" r="160" fill="none" stroke="#ff69b4" stroke-width="1" opacity="0.1"/>
+  <ellipse cx="200" cy="220" rx="90" ry="110" fill="url(#hair)" opacity="0.8"/>
+  <ellipse cx="200" cy="220" rx="65" ry="75" fill="#fce4ec"/>
+  <ellipse cx="175" cy="205" rx="18" ry="20" fill="#fff"/>
+  <ellipse cx="225" cy="205" rx="18" ry="20" fill="#fff"/>
+  <ellipse cx="178" cy="207" rx="10" ry="12" fill="#f5c2e0"/>
+  <ellipse cx="222" cy="207" rx="10" ry="12" fill="#f5c2e0"/>
+  <ellipse cx="178" cy="207" rx="5" ry="8" fill="#1a0f1a"/>
+  <ellipse cx="222" cy="207" rx="5" ry="8" fill="#1a0f1a"/>
+  <circle cx="172" cy="202" r="3" fill="#fff" opacity="0.8"/>
+  <circle cx="219" cy="202" r="3" fill="#fff" opacity="0.8"/>
+  <ellipse cx="165" cy="235" rx="12" ry="6" fill="#f5c2e0" opacity="0.3"/>
+  <ellipse cx="235" cy="235" rx="12" ry="6" fill="#f5c2e0" opacity="0.3"/>
+  <path d="M190,240 Q200,250 210,240" fill="none" stroke="#e57373" stroke-width="2" stroke-linecap="round"/>
+  <path d="M140,200 Q135,150 160,120 Q180,100 200,110 Q220,100 240,120 Q265,150 260,200" fill="url(#hair)" opacity="0.9"/>
+  <path d="M160,130 Q180,120 195,150 Q200,160 205,150 Q220,120 240,130 Q230,170 200,175 Q170,170 160,130Z" fill="url(#hair)"/>
+  <path d="M135,185 Q115,175 120,165 Q130,170 140,175Z" fill="#ff69b4"/>
+  <path d="M265,185 Q285,175 280,165 Q270,170 260,175Z" fill="#ff69b4"/>
+  <rect x="188" y="280" width="24" height="20" rx="5" fill="#fce4ec"/>
+  <path d="M145,300 L255,300 L270,470 L130,470Z" fill="url(#dress)" opacity="0.9"/>
+  <path d="M185,300 L200,330 L215,300Z" fill="#fff" opacity="0.3"/>
+  <path d="M200,340 Q185,330 180,340 Q185,350 200,340Z" fill="#ff69b4"/>
+  <path d="M200,340 Q215,330 220,340 Q215,350 200,340Z" fill="#ff69b4"/>
+  <circle cx="200" cy="340" r="4" fill="#f5c2e0"/>
+  <path d="M145,310 Q120,340 115,380" fill="none" stroke="url(#dress)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M255,310 Q280,340 285,380" fill="none" stroke="url(#dress)" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="115" cy="380" r="10" fill="#fce4ec"/>
+  <circle cx="285" cy="380" r="10" fill="#fce4ec"/>
+  <rect x="155" y="360" width="90" height="18" rx="9" fill="#ff69b4" opacity="0.2"/>
+  <text x="200" y="374" text-anchor="middle" fill="#f5c2e0" font-size="12" font-family="serif">Сакура</text>
+  <circle cx="100" cy="150" r="3" fill="#ffd700" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="130" r="2" fill="#ff69b4" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="320" cy="200" r="2.5" fill="#f5c2e0" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="230" r="2" fill="#ffd700" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Small hearts -->
+  <path d="M130,110 Q130,105 135,105 Q140,105 140,110 Q140,118 130,125 Q120,118 120,110 Q120,105 125,105 Q130,105 130,110Z" fill="#ff69b4" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <path d="M270,100 Q270,95 275,95 Q280,95 280,100 Q280,108 270,115 Q260,108 260,100 Q260,95 265,95 Q270,95 270,100Z" fill="#f5c2e0" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.7s" repeatCount="indefinite"/>
+  </path>
+</svg>

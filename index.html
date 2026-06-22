@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Waifu Tap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100dvh;overflow:hidden;font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#0a0015;color:#fff;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+
+/* ─── CANVAS PARTICLES BACKGROUND ─── */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+/* ─── SPIDER WEB OVERLAY ─── */
+#spider-web{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.06;}
+#spider-web svg{width:100%;height:100%;}
+
+/* ─── ANIMATED BACKGROUND ─── */
+#app{width:100%;height:100dvh;display:flex;flex-direction:column;position:relative;z-index:2;overflow:hidden;
+  background:linear-gradient(170deg,#0a0015 0%,#1a0a2e 30%,#2d1045 60%,#1a0a2e 80%,#0a0015 100%);}
+#app::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(ellipse at 20% 30%,rgba(255,105,180,0.10) 0%,transparent 45%),
+             radial-gradient(ellipse at 80% 70%,rgba(200,80,255,0.08) 0%,transparent 45%),
+             radial-gradient(ellipse at 50% 10%,rgba(255,150,200,0.06) 0%,transparent 40%);
+  animation:bgShift 25s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes bgShift{0%{transform:translate(0,0)}25%{transform:translate(-15px,25px)}50%{transform:translate(15px,-20px)}75%{transform:translate(-10px,15px)}100%{transform:translate(0,0)}}
+
+/* ─── FLOATING ORBS ─── */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:1;opacity:0.12;
+  background:radial-gradient(circle at center,rgba(255,105,180,0.4),transparent);}
+.orb1{width:350px;height:350px;top:-120px;right:-100px;animation:float1 10s ease-in-out infinite;}
+.orb2{width:250px;height:250px;bottom:-80px;left:-80px;animation:float2 12s ease-in-out infinite;}
+.orb3{width:180px;height:180px;top:35%;right:-50px;animation:float3 14s ease-in-out infinite;}
+.orb4{width:120px;height:120px;top:15%;left:10%;animation:float4 16s ease-in-out infinite;opacity:0.08;}
+@keyframes float1{0%,100%{transform:translate(0,0)}33%{transform:translate(-40px,30px)}66%{transform:translate(20px,-20px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-40px)}66%{transform:translate(-20px,20px)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-30px)}}
+@keyframes float4{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,20px)}}
+
+/* ─── SAKURA PETAL FALL (CSS backup for canvas) ─── */
+.sakura-petal{position:fixed;pointer-events:none;z-index:1;opacity:0.3;font-size:14px;
+  animation:sakuraFall linear infinite;}
+@keyframes sakuraFall{0%{transform:translateY(-20px) rotate(0deg) scale(0.8);opacity:0;}10%{opacity:0.4;}100%{transform:translateY(110vh) rotate(720deg) scale(1.2);opacity:0;}}
+
+/* ─── GLASS EFFECT ─── */
+.glass{border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+
+/* ─── TOP HUD ─── */
+#hud{position:relative;z-index:10;padding:14px 16px 8px;display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,transparent 100%);}
+#hud-left{display:flex;align-items:center;gap:8px;}
+#hud-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:900;background:linear-gradient(135deg,#ffb6d9,#ff69b4,#d084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.5px;text-shadow:none;}
+#hud-coins{display:flex;align-items:center;gap:5px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.10);border-radius:20px;padding:5px 14px 5px 8px;font-size:16px;font-weight:900;color:#ffd700;text-shadow:0 0 15px rgba(255,215,0,0.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+#hud-stars{display:flex;align-items:center;gap:3px;background:rgba(192,132,252,0.05);border:1px solid rgba(192,132,252,0.08);border-radius:20px;padding:5px 12px 5px 8px;font-size:14px;font-weight:800;color:#c084fc;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.hud-right{display:flex;gap:6px;}
+
+/* ─── GAME AREA ─── */
+#game{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;}
+#waifu-wrap{position:relative;width:260px;height:320px;cursor:pointer;transition:transform 0.12s cubic-bezier(0.16,1,0.3,1);}
+#waifu-wrap:active{transform:scale(0.90);}
+#waifu-wrap img{width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 0 30px rgba(255,100,150,0.15)) drop-shadow(0 0 60px rgba(200,80,200,0.10)) drop-shadow(0 0 100px rgba(255,105,180,0.05));
+  transition:filter 0.4s;}
+#waifu-wrap:hover img{filter:drop-shadow(0 0 40px rgba(255,100,150,0.25)) drop-shadow(0 0 80px rgba(200,80,200,0.15)) drop-shadow(0 0 120px rgba(255,105,180,0.08));}
+#waifu-name{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800;color:#f5c2e0;margin-top:6px;
+  text-shadow:0 0 20px rgba(245,194,224,0.25),0 0 40px rgba(245,194,224,0.1);letter-spacing:1px;}
+#tap-hint{font-size:11px;color:rgba(255,255,255,0.15);margin-top:6px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  animation:hintPulse 3s ease-in-out infinite;}
+@keyframes hintPulse{0%,100%{opacity:0.4;}50%{opacity:0.1;}}
+
+/* ─── TAP PARTICLES (элегантно) ─── */
+.tap-particle{position:absolute;pointer-events:none;font-family:'Unbounded',sans-serif;
+  font-weight:900;text-shadow:0 0 20px currentColor;z-index:20;animation:particleUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;}
+@keyframes particleUp{0%{opacity:1;transform:translateY(0) scale(0.5);filter:blur(0);}100%{opacity:0;transform:translateY(-100px) scale(1.4);filter:blur(4px);}}
+.tap-ripple{position:absolute;border-radius:50%;pointer-events:none;z-index:19;
+  animation:rippleOut 0.6s ease-out forwards;}
+@keyframes rippleOut{0%{width:0;height:0;opacity:0.4;border:2px solid rgba(255,105,180,0.5);}100%{width:200px;height:200px;opacity:0;border:1px solid rgba(255,105,180,0);}}
+
+/* ─── ENERGY BAR ─── */
+#energy-wrap{position:relative;z-index:10;padding:2px 16px 4px;}
+#energy-bar{display:flex;align-items:center;gap:8px;padding:4px 4px;}
+#energy-icon{font-size:12px;width:20px;text-align:center;filter:drop-shadow(0 0 6px rgba(255,200,100,0.2));}
+#energy-track{flex:1;height:5px;background:rgba(255,255,255,0.03);border-radius:10px;overflow:hidden;box-shadow:inset 0 0 6px rgba(0,0,0,0.3);}
+#energy-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#c084fc,#f5c2e0,#ff69b4,#ff8aae);width:100%;transition:width 0.3s ease;box-shadow:0 0 14px rgba(255,105,180,0.15);}
+#energy-text{font-size:10px;font-weight:800;color:rgba(255,255,255,0.25);min-width:48px;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:0.5px;}
+
+/* ─── NAV ─── */
+#nav{position:relative;z-index:10;display:flex;justify-content:space-around;padding:4px 4px 18px;
+  background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 100%);}
+.nav-btn{background:none;border:none;color:rgba(255,255,255,0.2);display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:8px 12px;border-radius:18px;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);font-size:8px;font-weight:800;min-width:48px;letter-spacing:0.5px;text-transform:uppercase;}
+.nav-btn .nav-icon{font-size:22px;transition:transform 0.2s,filter 0.3s;margin-bottom:1px;}
+.nav-btn:active .nav-icon{transform:scale(0.7);}
+.nav-btn.active{color:#ff8ec4;background:rgba(255,105,180,0.07);box-shadow:0 0 24px rgba(255,105,180,0.06);}
+.nav-btn.active .nav-icon{filter:drop-shadow(0 0 12px rgba(255,105,180,0.3));transform:scale(1.05);}
+
+/* ─── PAGE SYSTEM ─── */
+.page-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:50;background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;animation:fadeIn 0.25s ease-out;}
+.page-overlay.show{display:block;}
+@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+.page-panel{position:fixed;bottom:0;left:0;width:100%;max-height:87dvh;z-index:51;
+  background:linear-gradient(180deg,rgba(20,10,35,0.98) 0%,rgba(15,5,30,0.98) 100%);
+  border:1px solid rgba(255,255,255,0.04);border-radius:24px 24px 0 0;display:none;
+  animation:slideUp 0.35s cubic-bezier(0.16,1,0.3,1);}
+.page-panel.show{display:flex;flex-direction:column;}
+@keyframes slideUp{0%{transform:translateY(100%);opacity:0.5;}100%{transform:translateY(0);opacity:1;}}
+.page-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.page-header h2{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.page-close{background:none;border:none;color:rgba(255,255,255,0.15);font-size:22px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:all 0.2s;font-weight:300;}
+.page-close:active{background:rgba(255,255,255,0.03);}
+.page-body{flex:1;overflow-y:auto;padding:14px 20px 24px;-webkit-overflow-scrolling:touch;}
+
+/* ─── SHOP ─── */
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:16px;}
+.shop-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:18px;padding:16px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.shop-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);}
+.shop-card:active{transform:scale(0.94);background:rgba(245,194,224,0.03);border-color:rgba(245,194,224,0.08);}
+.shop-card .s-icon{font-size:30px;margin-bottom:4px;}
+.shop-card .s-name{font-size:13px;font-weight:800;color:#eee;font-family:'Unbounded',sans-serif;}
+.shop-card .s-desc{font-size:9px;color:rgba(255,255,255,0.3);font-weight:700;margin-top:3px;line-height:1.4;text-transform:uppercase;letter-spacing:0.5px;}
+.shop-card .s-price{font-size:14px;font-weight:900;color:#ffd700;margin-top:8px;text-shadow:0 0 10px rgba(255,215,0,0.1);}
+
+/* ─── WAIFUS ─── */
+.waifu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.waifu-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.25s;display:flex;flex-direction:column;}
+.waifu-card:active{transform:scale(0.94);}
+.waifu-card.selected{border-color:rgba(245,194,224,0.2);background:rgba(245,194,224,0.04);box-shadow:0 0 30px rgba(245,194,224,0.06);}
+.waifu-card .w-img-wrap{width:100%;aspect-ratio:1;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:8px;}
+.waifu-card .w-img-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 16px rgba(255,100,150,0.08));transition:filter 0.3s;}
+.waifu-card:hover .w-img-wrap img{filter:drop-shadow(0 0 24px rgba(255,100,150,0.18));}
+.waifu-card .w-info{padding:10px 12px 14px;flex:1;display:flex;flex-direction:column;gap:4px;}
+.waifu-card .w-name{font-size:12px;font-weight:800;color:#eee;font-family:'Unbounded',sans-serif;line-height:1.3;}
+.waifu-card .w-rarity{font-size:9px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.5px;}
+.waifu-card .w-bonus{font-size:10px;font-weight:700;color:#ffd700;}
+.waifu-card.selected .w-bonus{color:#4ade80;}
+.w-badge{font-size:10px;font-weight:800;padding:5px 10px;border-radius:10px;text-align:center;margin-top:6px;letter-spacing:0.3px;}
+.selected-badge{background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.15);}
+.free-badge{background:rgba(255,215,0,0.08);color:#ffd700;border:1px solid rgba(255,215,0,0.12);cursor:pointer;transition:all 0.2s;}
+.free-badge:active{background:rgba(255,215,0,0.15);}
+.locked-badge{background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.04);}
+.w-buy-btn{font-size:10px;font-weight:800;padding:8px 14px;border-radius:14px;border:none;background:linear-gradient(135deg,#ff69b4,#d084fc);color:#fff;cursor:pointer;margin-top:6px;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);font-family:'Inter',sans-serif;letter-spacing:0.3px;box-shadow:0 2px 12px rgba(255,105,180,0.2);}
+.w-buy-btn:active{transform:scale(0.90);opacity:0.8;}
+
+/* ─── DAILY ─── */
+.daily-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0;}
+.d-day{aspect-ratio:0.8;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;gap:2px;transition:all 0.3s;}
+.d-day .dd-num{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:900;}
+.d-day .dd-r{font-size:7px;color:rgba(255,255,255,0.3);font-weight:700;}
+.d-day.claimed{border-color:rgba(74,222,128,0.2);background:rgba(74,222,128,0.03);}
+.d-day.claimed .dd-r{color:rgba(74,222,128,0.6);}
+.d-day.current{border-color:rgba(245,194,224,0.25);background:rgba(245,194,224,0.05);transform:scale(1.06);
+  box-shadow:0 0 20px rgba(245,194,224,0.06);}
+.d-day.current .dd-num{color:#f5c2e0;}
+.d-day.locked{opacity:0.25;}
+.daily-btn{width:100%;padding:16px;border:none;border-radius:18px;
+  background:linear-gradient(135deg,#ff69b4,#ff8ec4,#ffb6d9);color:#fff;font-size:16px;font-weight:900;cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);margin-top:10px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.15);}
+.daily-btn:hover{box-shadow:0 4px 32px rgba(255,105,180,0.25);}
+.daily-btn:active{transform:scale(0.94);}
+.daily-btn:disabled{opacity:0.2;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ─── LEADERBOARD ─── */
+.lb-entry{display:flex;align-items:center;gap:12px;padding:12px 6px;border-bottom:1px solid rgba(255,255,255,0.02);}
+.lb-rank{font-size:16px;font-weight:900;min-width:34px;text-align:center;font-family:'Unbounded',sans-serif;}
+.lb-rank.gold{color:#ffd700;text-shadow:0 0 15px rgba(255,215,0,0.2);}
+.lb-rank.silver{color:#c0c0c0;}
+.lb-rank.bronze{color:#cd7f32;}
+.lb-ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(245,194,224,0.04);}
+.lb-info{flex:1;}
+.lb-name{font-size:13px;font-weight:800;color:#eee;}
+.lb-sub{font-size:9px;color:rgba(255,255,255,0.2);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.lb-coins{font-size:14px;font-weight:900;color:#ffd700;font-family:'Unbounded',sans-serif;}
+
+/* ─── REFERRAL ─── */
+.ref-section{text-align:center;padding:14px 0;}
+.ref-icon{font-size:60px;margin-bottom:12px;filter:drop-shadow(0 0 20px rgba(245,194,224,0.1));}
+.ref-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.ref-desc{font-size:12px;color:rgba(255,255,255,0.4);font-weight:700;margin-bottom:18px;line-height:1.6;letter-spacing:0.3px;}
+.ref-stats{display:flex;justify-content:center;gap:40px;margin-bottom:18px;}
+.ref-stat{text-align:center;}
+.ref-stat .rs-v{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:900;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ref-stat .rs-l{font-size:10px;color:rgba(255,255,255,0.2);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.ref-link-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.04);border-radius:14px;padding:14px;margin-bottom:14px;font-size:10px;color:rgba(255,255,255,0.3);font-weight:700;word-break:break-all;letter-spacing:0.3px;font-family:monospace;}
+.ref-copy-btn{width:100%;padding:16px;border:none;border-radius:18px;
+  background:linear-gradient(135deg,#ff69b4,#ff8ec4,#ffb6d9);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.12);}
+.ref-copy-btn:hover{box-shadow:0 4px 32px rgba(255,105,180,0.2);}
+.ref-copy-btn:active{transform:scale(0.94);}
+
+/* ─── AD BUTTON ─── */
+#adBanner{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:40;display:none;
+  background:linear-gradient(135deg,rgba(255,105,180,0.92),rgba(208,132,252,0.92));
+  border-radius:22px;padding:14px 28px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06);
+  cursor:pointer;animation:adUp 0.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 8px 40px rgba(255,105,180,0.15);font-size:14px;font-weight:800;color:#fff;gap:8px;align-items:center;
+  font-family:'Unbounded',sans-serif;letter-spacing:0.5px;white-space:nowrap;}
+#adBanner:active{transform:translateX(-50%) scale(0.94);}
+#adBanner .ad-sub{font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:0.5px;}
+@keyframes adUp{0%{opacity:0;transform:translateX(-50%) translateY(40px);}100%{opacity:1;transform:translateX(-50%) translateY(0);}}
+
+/* ─── AD MODAL ─── */
+#adModal{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:300;background:rgba(0,0,0,0.8);backdrop-filter:blur(24px);display:none;flex-direction:column;align-items:center;justify-content:center;}
+#adModal.show{display:flex;}
+#adVideo{width:280px;height:180px;background:rgba(255,255,255,0.02);border-radius:20px;border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:16px;position:relative;}
+#adTimer{font-family:'Unbounded',sans-serif;font-size:56px;font-weight:900;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#adLabel{font-size:13px;color:rgba(255,255,255,0.2);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+#adReward{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;color:#ffd700;margin-top:12px;text-shadow:0 0 20px rgba(255,215,0,0.1);}
+#adSkipBtn{padding:12px 32px;border:1px solid rgba(255,255,255,0.06);border-radius:14px;background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.2);font-size:13px;font-weight:800;cursor:pointer;transition:all 0.25s;margin-top:16px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;}
+#adSkipBtn:active{transform:scale(0.94);}
+#adCloseBtn{padding:12px 32px;border:none;border-radius:18px;
+  background:linear-gradient(135deg,#ff69b4,#ff8ec4,#ffb6d9);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);margin-top:16px;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;
+  box-shadow:0 4px 24px rgba(255,105,180,0.15);display:none;}
+#adCloseBtn:active{transform:scale(0.94);}
+
+/* ─── TOAST ─── */
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:100;
+  background:rgba(15,0,30,0.94);border:1px solid rgba(255,105,180,0.1);border-radius:18px;
+  padding:14px 24px;font-size:13px;font-weight:800;color:#fff;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 8px 40px rgba(0,0,0,0.5),0 0 20px rgba(255,105,180,0.04);display:none;max-width:88%;text-align:center;letter-spacing:0.3px;font-family:'Unbounded',sans-serif;}
+#toast.show{display:block;animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1);}
+@keyframes toastIn{0%{opacity:0;transform:translateX(-50%) translateY(-20px) scale(0.9);}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100dvh;z-index:200;background:rgba(0,0,0,0.6);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:linear-gradient(180deg,rgba(20,10,35,0.98),rgba(15,5,30,0.98));border:1px solid rgba(255,255,255,0.04);border-radius:28px;padding:32px 24px 24px;max-width:320px;width:90%;text-align:center;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1);}
+@keyframes modalIn{0%{opacity:0;transform:scale(0.88);}100%{opacity:1;transform:scale(1);}}
+.modal-box h3{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(135deg,#f5c2e0,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.modal-box p{font-size:14px;color:rgba(255,255,255,0.5);font-weight:700;line-height:1.6;margin-bottom:20px;letter-spacing:0.3px;}
+.modal-actions{display:flex;gap:8px;}
+.modal-actions button{flex:1;padding:14px;border:none;border-radius:16px;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  background:linear-gradient(135deg,#ff69b4,#ff8ec4,#ffb6d9);color:#fff;font-family:'Unbounded',sans-serif;letter-spacing:0.5px;box-shadow:0 2px 16px rgba(255,105,180,0.15);}
+.modal-actions button:active{transform:scale(0.94);}
+.modal-actions button.sec{background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.04);box-shadow:none;}
+
+/* ─── SCROLLBAR ─── */
+.page-body::-webkit-scrollbar{width:2px;}
+.page-body::-webkit-scrollbar-track{background:transparent;}
+.page-body::-webkit-scrollbar-thumb{background:rgba(245,194,224,0.1);border-radius:10px;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:360px){
+  #waifu-wrap{width:210px;height:270px;}
+  #hud{padding:12px 10px;}
+  .shop-grid{grid-template-columns:1fr;}
+  #hud-title{font-size:13px;}
+}
+@media(min-width:768px){
+  #waifu-wrap{width:320px;height:400px;}
+}
+</style>
+</head>
+<body>
+<!-- PARTICLES CANVAS -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- SPIDER WEB OVERLAY -->
+<div id="spider-web">
+<svg viewBox="0 0 400 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M200 0 L200 800 M0 400 L400 400 M100 0 L100 800 M300 0 L300 800 M0 200 L400 200 M0 600 L400 600" stroke="rgba(255,150,200,0.3)" stroke-width="0.5" fill="none"/>
+  <path d="M200 0 Q250 100 200 200 M200 200 Q250 300 200 400 M200 400 Q250 500 200 600 M200 600 Q250 700 200 800" stroke="rgba(255,150,200,0.2)" stroke-width="0.5" fill="none"/>
+  <path d="M200 0 Q150 100 200 200 M200 200 Q150 300 200 400 M200 400 Q150 500 200 600 M200 600 Q150 700 200 800" stroke="rgba(255,150,200,0.2)" stroke-width="0.5" fill="none"/>
+  <path d="M0 400 Q100 350 200 400 Q300 350 400 400" stroke="rgba(255,150,200,0.15)" stroke-width="0.3" fill="none"/>
+  <path d="M0 200 Q100 150 200 200 Q300 150 400 200" stroke="rgba(255,150,200,0.12)" stroke-width="0.3" fill="none"/>
+  <path d="M0 600 Q100 550 200 600 Q300 550 400 600" stroke="rgba(255,150,200,0.12)" stroke-width="0.3" fill="none"/>
+  <!-- Дополнительные радиальные линии паутины -->
+  <path d="M200 0 Q180 50 160 100 Q140 150 120 200 Q100 250 80 300 Q60 350 40 400" stroke="rgba(255,150,200,0.1)" stroke-width="0.3" fill="none"/>
+  <path d="M200 0 Q220 50 240 100 Q260 150 280 200 Q300 250 320 300 Q340 350 360 400" stroke="rgba(255,150,200,0.1)" stroke-width="0.3" fill="none"/>
+  <path d="M40 400 Q60 450 80 500 Q100 550 120 600 Q140 650 160 700 Q180 750 200 800" stroke="rgba(255,150,200,0.1)" stroke-width="0.3" fill="none"/>
+  <path d="M360 400 Q340 450 320 500 Q300 550 280 600 Q260 650 240 700 Q220 750 200 800" stroke="rgba(255,150,200,0.1)" stroke-width="0.3" fill="none"/>
+  <!-- Концентрические круги паутины -->
+  <ellipse cx="200" cy="400" rx="40" ry="60" stroke="rgba(255,150,200,0.08)" stroke-width="0.3" fill="none"/>
+  <ellipse cx="200" cy="400" rx="80" ry="120" stroke="rgba(255,150,200,0.06)" stroke-width="0.3" fill="none"/>
+  <ellipse cx="200" cy="400" rx="130" ry="180" stroke="rgba(255,150,200,0.04)" stroke-width="0.3" fill="none"/>
+  <ellipse cx="200" cy="400" rx="190" ry="260" stroke="rgba(255,150,200,0.03)" stroke-width="0.3" fill="none"/>
+</svg>
+</div>
+
+<div id="app"></div>
+
+<!-- FLOATING ORBS -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="orb orb4"></div>
+
+<!-- SHOP PAGE -->
+<div class="page-overlay" id="ov-shop" onclick="closePage('shop')"></div>
+<div class="page-panel" id="pp-shop">
+  <div class="page-header"><h2>🛍️ Магазин</h2><button class="page-close" onclick="closePage('shop')">✕</button></div>
+  <div class="page-body" id="shopContent"></div>
+</div>
+
+<!-- WAIFUS PAGE -->
+<div class="page-overlay" id="ov-waifus" onclick="closePage('waifus')"></div>
+<div class="page-panel" id="pp-waifus">
+  <div class="page-header"><h2>🌸 Вайфу</h2><button class="page-close" onclick="closePage('waifus')">✕</button></div>
+  <div class="page-body" id="waifuContent"></div>
+</div>
+
+<!-- DAILY PAGE -->
+<div class="page-overlay" id="ov-daily" onclick="closePage('daily')"></div>
+<div class="page-panel" id="pp-daily">
+  <div class="page-header"><h2>🎁 Ежедневно</h2><button class="page-close" onclick="closePage('daily')">✕</button></div>
+  <div class="page-body" id="dailyContent"></div>
+</div>
+
+<!-- REFERRAL PAGE -->
+<div class="page-overlay" id="ov-referral" onclick="closePage('referral')"></div>
+<div class="page-panel" id="pp-referral">
+  <div class="page-header"><h2>🔗 Пригласить</h2><button class="page-close" onclick="closePage('referral')">✕</button></div>
+  <div class="page-body" id="refContent"></div>
+</div>
+
+<!-- LEADERBOARD PAGE -->
+<div class="page-overlay" id="ov-leaderboard" onclick="closePage('leaderboard')"></div>
+<div class="page-panel" id="pp-leaderboard">
+  <div class="page-header"><h2>🏆 Топ игроков</h2><button class="page-close" onclick="closePage('leaderboard')">✕</button></div>
+  <div class="page-body" id="lbContent"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- AD BANNER -->
+<div id="adBanner" onclick="openAd()">
+  <span>🎬 Смотреть рекламу</span>
+  <span class="ad-sub">· +100 🪙</span>
+</div>
+
+<!-- AD MODAL -->
+<div id="adModal">
+  <div id="adVideo">📺</div>
+  <div id="adTimer">5</div>
+  <div id="adLabel">Реклама</div>
+  <div id="adReward">+100 🪙 после просмотра</div>
+  <button id="adSkipBtn" onclick="skipAd()">⏭ Пропустить</button>
+  <button id="adCloseBtn" onclick="closeAd()">🎉 Получить награду</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <h3 id="modalTitle">🎉</h3>
+    <p id="modalText"></p>
+    <div class="modal-actions" id="modalBtns"></div>
+  </div>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+// ─── КОНФИГУРАЦИЯ ───
+const API_BASE = 'https://waifutap.alwaysdata.net'; // Адрес API (бекенд)
+
+// ─── STANDA√TNE ШТУКИ (Telegram WebApp SDK) ───
+let TG = null;
+(function ensureTG() {
+  if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
+    TG = window.Telegram.WebApp;
+    TG.expand();
+    TG.disableVerticalSwipes?.();
+    TG.setHeaderColor?.('#0a0015');
+    TG.ready();
+  } else {
+    setTimeout(ensureTG, 100);
+  }
+})();
+
+// ─── APP HTML ───
+document.getElementById('app').innerHTML = `
+  <div id="hud">
+    <div id="hud-left">
+      <div id="hud-title">Waifu Tap</div>
+    </div>
+    <div class="hud-right">
+      <div id="hud-coins">🪙 <span id="coinDisplay">0</span></div>
+      <div id="hud-stars">⭐ <span id="starDisplay">0</span></div>
+    </div>
+  </div>
+  <div id="game">
+    <div id="waifu-wrap">
+      <img id="waifu-img" src="/assets/images/waifu1.svg" alt="waifu" draggable="false">
+    </div>
+    <div id="waifu-name">🌸 Сакура</div>
+    <div id="tap-hint">— TAP —</div>
+  </div>
+  <div id="energy-wrap">
+    <div id="energy-bar">
+      <span id="energy-icon">⚡</span>
+      <div id="energy-track"><div id="energy-fill" style="width:100%"></div></div>
+      <span id="energy-text">100/100</span>
+    </div>
+  </div>
+  <div id="nav">
+    <button class="nav-btn" data-page="shop" onclick="openPage('shop')"><span class="nav-icon">🛍️</span><span>Магазин</span></button>
+    <button class="nav-btn" data-page="waifus" onclick="openPage('waifus')"><span class="nav-icon">🌸</span><span>Вайфу</span></button>
+    <button class="nav-btn" data-page="daily" onclick="openPage('daily')"><span class="nav-icon">🎁</span><span>Награды</span></button>
+    <button class="nav-btn" data-page="referral" onclick="openPage('referral')"><span class="nav-icon">🔗</span><span>Друзья</span></button>
+    <button class="nav-btn" data-page="leaderboard" onclick="openPage('leaderboard')"><span class="nav-icon">🏆</span><span>Топ</span></button>
+  </div>
+`;
+
+// ─── СОСТОЯНИЕ ───
+const state = { user: null, coins: 0, stars: 0, energy: 100, maxEnergy: 100, coinsPerTap: 1,
+  totalTaps: 0, waifuId: 1, isGuest: false, tapLevel: 1 };
+let toastTimer = null;
+let adTimer = null;
+const WAIFUS = [
+  { id: 1, name: 'Аска Лэнгли', emoji: '🔴', rarity: '✨ Обычная', bonus: '+1 🪙 за тап', color: '#ff4444', mult: 1 },
+  { id: 2, name: 'Рей Аянами', emoji: '🔵', rarity: '🔥 Редкая', bonus: '+2 ⚡ энергии', color: '#4488ff', mult: 1 },
+  { id: 3, name: 'Пауэр', emoji: '🩸', rarity: '💎 Эпическая', bonus: '×2 🪙 за тап', color: '#ff6622', mult: 2 },
+  { id: 4, name: 'Макима', emoji: '🦊', rarity: '👑 Легендарная', bonus: '+50 ⚡ макс.', color: '#cc8844', mult: 1 },
+  { id: 5, name: 'Рукия Кучики', emoji: '⚔️', rarity: '👑 Легендарная', bonus: '×3 🪙 за тап', color: '#8844cc', mult: 3 },
+  { id: 6, name: 'Йор Брайар', emoji: '🗡️', rarity: '💎 Эпическая', bonus: '+100 ⚡ макс.', color: '#cc2244', mult: 1 },
+  { id: 7, name: 'Зеро Цвай', emoji: '👹', rarity: '🔮 Мифическая', bonus: '×5 🪙 за тап', color: '#ff66cc', mult: 5 },
+  { id: 8, name: 'Фрирен', emoji: '🧙', rarity: '🔮 Мифическая', bonus: '+5 авт. тапов', color: '#66aaff', mult: 1 }
+];
+const DAILY = [
+  { day: 1, coins: 100, stars: 0 }, { day: 2, coins: 200, stars: 0 },
+  { day: 3, coins: 300, stars: 0 }, { day: 4, coins: 500, stars: 1 },
+  { day: 5, coins: 800, stars: 0 }, { day: 6, coins: 1200, stars: 2 },
+  { day: 7, coins: 2000, stars: 5 }
+];
+
+// ─── ПАРС МОНЕТ ───
+function fmtCoin(n) {
+  if (n >= 1e6) return Math.floor(n/1e5)/10 + 'M';
+  if (n >= 1e3) return n.toLocaleString('ru-RU');
+  return String(Math.floor(n));
+}
+
+// ─── ИНИЦИАЛИЗАЦИЯ ───
+async function init() {
+  let guestMode = false;
+  if (!TG) guestMode = true;
+
+  if (!guestMode) {
+    try {
+      const ctrl = new AbortController();
+      const tm = setTimeout(() => ctrl.abort(), 5000);
+      const r = await fetch(API_BASE + '/api/auth', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({initData:TG.initData||'', referrerId:null}), signal: ctrl.signal });
+      clearTimeout(tm);
+      if (r.ok) {
+        const d = await r.json();
+        if (d.success) { state.user = d.user; applyUser(d.user); }
+        else { guestMode = true; }
+      } else { guestMode = true; }
+    } catch(e) { guestMode = true; }
+  }
+
+  if (guestMode) {
+    let gid = localStorage.getItem('wg_id');
+    let gnm = localStorage.getItem('wg_name') || 'Анимешник';
+    if (!gid) { gid = 'g_' + Math.random().toString(36).substr(2,9); localStorage.setItem('wg_id', gid); }
+    try {
+      const r = await fetch(API_BASE + '/api/guest/auth', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({guest_id:gid, name:gnm}) });
+      if (r.ok) {
+        const d = await r.json();
+        if (d.success) { state.user = d.user; state.isGuest = true; applyUser(d.user); }
+      }
+    } catch(e) {}
+  }
+
+  loadShop();
+  loadWaifus();
+  loadLB();
+  loadDaily();
+
+  // Реклама раз в 3 минуты
+  setTimeout(showAdBanner, 180000);
+  setInterval(showAdBanner, 180000);
+
+  if (TG) TG.ready();
+
+  document.getElementById('waifu-wrap').addEventListener('click', onTap);
+}
+
+function showAdBanner() {
+  const b = document.getElementById('adBanner');
+  if (b && state.user) b.style.display = 'flex';
+}
+
+function applyUser(u) {
+  state.coins = u.coins || 0;
+  state.stars = u.stars || 0;
+  state.energy = u.energy || 100;
+  state.maxEnergy = u.max_energy || 100;
+  state.coinsPerTap = u.coins_per_tap || 1;
+  state.totalTaps = u.total_taps || 0;
+  state.waifuId = u.current_waifu_id || 1;
+  state.tapLevel = u.tap_level || 1;
+  updateHUD();
+  setWaifu(state.waifuId);
+  updateAutoTap();
+}
+
+function setWaifu(id) {
+  const w = WAIFUS.find(x => x.id === id) || WAIFUS[0];
+  document.getElementById('waifu-img').src = '/assets/images/waifu' + id + '.svg?' + Date.now();
+  document.getElementById('waifu-name').textContent = w.emoji + ' ' + w.name;
+}
+
+function updateHUD() {
+  document.getElementById('coinDisplay').textContent = fmtCoin(state.coins);
+  document.getElementById('starDisplay').textContent = fmtCoin(state.stars);
+  const pct = state.maxEnergy > 0 ? Math.max(0, (state.energy / state.maxEnergy) * 100) : 0;
+  document.getElementById('energy-fill').style.width = pct + '%';
+  document.getElementById('energy-text').textContent = Math.floor(state.energy) + '/' + state.maxEnergy;
+}
+
+// ─── ТАП ───
+async function onTap(e) {
+  if (!state.user) { showToast('⏳ Загрузка...'); return; }
+  if (state.energy < 1) { showToast('⚡ Нет энергии! Купи в магазине'); return; }
+
+  state.energy = Math.max(0, state.energy - 1);
+  // Множитель от текущей вайфу
+  const w = WAIFUS.find(x => x.id === state.waifuId) || WAIFUS[0];
+  const earn = state.coinsPerTap * (w.mult || 1);
+  state.coins += earn;
+  updateHUD();
+
+  // Элегантный эффект тапа — 1 частица + ripple
+  spawnParticle(e, earn);
+
+  if (navigator.vibrate) navigator.vibrate(8);
+
+  try {
+    await fetch(API_BASE + '/api/tap', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ telegram_id: state.user.telegram_id }) });
+  } catch(e) {}
+}
+
+function spawnParticle(e, amount) {
+  const wrap = document.getElementById('waifu-wrap');
+  const rect = wrap.getBoundingClientRect();
+  const cx = e.clientX || rect.left + rect.width/2;
+  const cy = e.clientY || rect.top + rect.height/3;
+
+  // +coin текст
+  const el = document.createElement('div');
+  el.className = 'tap-particle';
+  el.textContent = '+🪙' + amount;
+  el.style.left = (cx - rect.left + (Math.random()-0.5)*30) + 'px';
+  el.style.top = (cy - rect.top - 10) + 'px';
+  el.style.fontSize = (18 + Math.random()*8) + 'px';
+  const colors = ['#ffd700', '#ff69b4', '#ff8ec4', '#ffb6d9'];
+  el.style.color = colors[Math.floor(Math.random() * colors.length)];
+  el.style.textShadow = `0 0 20px ${el.style.color}, 0 0 40px ${el.style.color}`;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+
+  // ripple effect
+  const ripple = document.createElement('div');
+  ripple.className = 'tap-ripple';
+  ripple.style.left = (cx - rect.left - 100) + 'px';
+  ripple.style.top = (cy - rect.top - 100) + 'px';
+  ripple.style.borderColor = 'rgba(255,105,180,0.3)';
+  wrap.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+}
+
+// ─── ЭНЕРГИЯ ───
+setInterval(() => {
+  if (!state.user || state.energy >= state.maxEnergy) return;
+  const regenRate = state.isGuest ? 2 : 1;
+  state.energy = Math.min(state.maxEnergy, state.energy + regenRate * 0.5);
+  updateHUD();
+}, 1500);
+
+// ─── АВТОТАПЫ (Фрирен) ───
+let autoTapInterval = null;
+function updateAutoTap() {
+  if (autoTapInterval) { clearInterval(autoTapInterval); autoTapInterval = null; }
+  // Автотапы если включены (Фрирен или куплен автокликер)
+  if (state.user && state.waifuId === 8) {
+    autoTapInterval = setInterval(() => {
+      if (!state.user || state.energy < 1) return;
+      // Тап без визуала (тихий)
+      state.energy = Math.max(0, state.energy - 1);
+      const w = WAIFUS.find(x => x.id === state.waifuId) || WAIFUS[0];
+      state.coins += state.coinsPerTap * (w.mult || 1);
+      updateHUD();
+      fetch(API_BASE + '/api/tap', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ telegram_id: state.user.telegram_id }) }).catch(()=>{});
+    }, 1000);
+  }
+}
+// Вызываем после applyUser и при смене вайфу
+
+// ─── СТРАНИЦЫ ───
+function openPage(name) {
+  const ov = document.getElementById('ov-' + name);
+  const pp = document.getElementById('pp-' + name);
+  if (ov) ov.classList.add('show');
+  if (pp) pp.classList.add('show');
+  if (name === 'shop') loadShop();
+  if (name === 'waifus') loadWaifus();
+  if (name === 'daily') loadDaily();
+  if (name === 'referral') loadRef();
+  if (name === 'leaderboard') loadLB();
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.nav-btn[data-page="${name}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+function closePage(name) {
+  const ov = document.getElementById('ov-' + name);
+  const pp = document.getElementById('pp-' + name);
+  if (ov) ov.classList.remove('show');
+  if (pp) pp.classList.remove('show');
+}
+
+// ─── МАГАЗИН ───
+let shopItems = [];
+
+async function loadShop() {
+  try {
+    const r = await fetch(API_BASE + '/api/shop');
+    const d = await r.json();
+    if (d.success) { shopItems = d.items; renderShop(); }
+  } catch(e) { showToast('❌ Ошибка магазина'); }
+}
+
+function renderShop() {
+  const c = document.getElementById('shopContent');
+  if (!shopItems.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-weight:800;font-family:Unbounded,sans-serif;">Магазин пуст</p>'; return; }
+  c.innerHTML = '<div class="shop-grid">' + shopItems.map(item => {
+    const isStar = item.price_type === 'stars';
+    return `<div class="shop-card" onclick="buyItem(${item.id})">
+      <div class="s-icon">${item.emoji || '📦'}</div>
+      <div class="s-name">${item.name}</div>
+      <div class="s-desc">${item.description || ''}</div>
+      <div class="s-price">${isStar ? '⭐' : '🪙'} ${fmtCoin(item.price)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+async function buyItem(itemId) {
+  if (!state.user) return;
+  try {
+    const r = await fetch(API_BASE + '/api/shop/buy', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ telegram_id: state.user.telegram_id, item_id: itemId }) });
+    const d = await r.json();
+    if (d.success) {
+      showToast(`✅ ${d.item_emoji||'📦'} ${d.item || 'Куплено!'}`);
+      loadUserData();
+    } else {
+      showToast('❌ ' + (d.error || 'Недостаточно средств'));
+    }
+  } catch(e) { showToast('❌ Ошибка'); }
+}
+
+async function loadUserData() {
+  if (!state.user) return;
+  try {
+    const r = await fetch(API_BASE + '/api/user/' + state.user.telegram_id);
+    const d = await r.json();
+    if (d.success) { state.user = d.user; applyUser(d.user); }
+  } catch(e) {}
+}
+
+// ─── ВАЙФУ ───
+let allWaifus = [];
+
+async function loadWaifus() {
+  try {
+    const r = await fetch(API_BASE + '/api/waifus');
+    const d = await r.json();
+    if (d.success) { allWaifus = d.waifus || []; renderWaifus(); }
+  } catch(e) {}
+}
+
+function renderWaifus() {
+  const c = document.getElementById('waifuContent');
+  if (!allWaifus.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Нет вайфу</p>'; return; }
+  const owned = state.user?.owned_waifus || [];
+  c.innerHTML = '<div class="waifu-grid">' + allWaifus.map(w => {
+    const sel = w.id === state.waifuId;
+    const waifu = WAIFUS.find(x => x.id === w.id) || {};
+    const isOwned = owned.includes(w.id);
+    const priceCoins = w.price_coins || 0;
+    const priceStars = w.price_stars || 0;
+    const locked = w.unlock_requirement || '';
+    const canBuy = priceCoins <= state.coins && priceStars <= state.stars;
+    const hasPrice = priceCoins > 0 || priceStars > 0;
+    let actionHtml = '';
+    if (sel) {
+      actionHtml = '<div class="w-badge selected-badge">✅ Выбрана</div>';
+    } else if (isOwned) {
+      actionHtml = '<button class="w-badge free-badge" onclick="event.stopPropagation();selectWaifu('+w.id+')">🌸 Выбрать</button>';
+    } else if (!hasPrice) {
+      actionHtml = '<button class="w-badge free-badge" onclick="event.stopPropagation();selectWaifu('+w.id+')">🌸 Выбрать</button>';
+    } else if (canBuy) {
+      actionHtml = `<button class="w-buy-btn" onclick="event.stopPropagation();selectWaifu(${w.id})">💎 Купить ${priceCoins>0?'🪙'+fmtCoin(priceCoins):''}${priceStars>0?' ⭐'+fmtCoin(priceStars):''}</button>`;
+    } else {
+      const lockText = locked ? locked.replace(/^tap_level\s*>=\s*(\d+)/,'нужен ур. $1').replace(/^total_taps\s*>=\s*(\d+)/,'нужно $1 тапов').replace(/^total_coins_earned\s*>=\s*(\d+)/,'нужно заработать 🪙'+(parseInt(locked.match(/\d+/)?.[0]||'0'))).replace(/^referrals\s*>=\s*(\d+)/,'нужно $1 друзей') : (priceCoins>0?'🪙'+fmtCoin(priceCoins):'')+(priceStars>0?' ⭐'+fmtCoin(priceStars):'');
+      actionHtml = `<div class="w-badge locked-badge">🔒 ${lockText}</div>`;
+    }
+    return `<div class="waifu-card${sel?' selected':''}" onclick="selectWaifu(${w.id})">
+      <div class="w-img-wrap"><img src="/assets/images/waifu${w.id}.svg" alt="${waifu.name||w.name}" loading="lazy"></div>
+      <div class="w-info">
+        <div class="w-name">${waifu.emoji||''} ${waifu.name||w.name}</div>
+        <div class="w-rarity" style="color:${waifu.color||'#888'}">${waifu.rarity||'Обычная'}</div>
+        <div class="w-bonus">${waifu.bonus||''}</div>
+        ${actionHtml}
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+async function selectWaifu(id) {
+  if (!state.user) return;
+  if (id === state.waifuId) { closePage('waifus'); return; }
+  try {
+    const r = await fetch(API_BASE + '/api/waifu/select', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ telegram_id: state.user.telegram_id, waifu_id: id }) });
+    const d = await r.json();
+    if (d.success) {
+      state.waifuId = id;
+      setWaifu(id);
+      updateAutoTap();
+      await loadUserData();
+      renderWaifus();
+      if (d.already_owned) {
+        showToast(`🌸 ${d.waifu || 'Вайфу'} выбрана!`);
+      } else {
+        showToast(`🌸 ${d.waifu_emoji||''} ${d.waifu || 'Вайфу'} куплена и выбрана!`);
+      }
+      closePage('waifus');
+    } else {
+      showToast('❌ ' + (d.error || 'Недоступна'));
+    }
+  } catch(e) { showToast('❌ Ошибка'); }
+}
+
+// ─── ЕЖЕДНЕВКА ───
+let dailyData = {};
+
+async function loadDaily() {
+  if (!state.user) return;
+  try {
+    const r = await fetch(API_BASE + '/api/daily/status/' + state.user.telegram_id);
+    const d = await r.json();
+    if (d.success) { dailyData = d; renderDaily(); }
+  } catch(e) {}
+}
+
+function renderDaily() {
+  const c = document.getElementById('dailyContent');
+  const next = dailyData.next_day || 1;
+  const avail = dailyData.available || false;
+  c.innerHTML = `<div style="text-align:center;margin-bottom:14px;">
+    <div style="font-size:40px;margin-bottom:6px;filter:drop-shadow(0 0 20px rgba(245,194,224,0.1));">📅</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:0.5px;">Заходи каждый день и получай бонусы!</p>
+  </div>
+  <div class="daily-grid">${DAILY.map(r => {
+    let cls = 'd-day locked';
+    if (r.day < next) cls = 'd-day claimed';
+    else if (r.day === next && avail) cls = 'd-day current';
+    return `<div class="${cls}">
+      <div class="dd-num">${r.day}</div>
+      <div class="dd-r">🪙${r.coins}</div>
+      ${r.stars > 0 ? `<div class="dd-r">⭐${r.stars}</div>` : ''}
+    </div>`;
+  }).join('')}</div>
+  <button class="daily-btn" id="dailyBtn" onclick="claimDaily()" ${!avail?'disabled':''}>
+    ${avail ? '🎁 Забрать!' : '✅ Уже сегодня'}
+  </button>
+  <div style="text-align:center;margin-top:12px;font-size:10px;color:rgba(255,255,255,0.15);font-weight:700;letter-spacing:0.5px;">
+    ${avail ? `День ${next}/7 — награда готова!` : `Следующая: день ${next}/7`}
+  </div>`;
+}
+
+async function claimDaily() {
+  if (!state.user || !dailyData.available) return;
+  try {
+    const r = await fetch(API_BASE + '/api/daily/claim', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ telegram_id: state.user.telegram_id }) });
+    const d = await r.json();
+    if (d.success) {
+      showModal('🎉 Ежедневная награда!', `🪙 +${d.coins} монет${d.stars > 0 ? '\n⭐ +' + d.stars + ' Stars' : ''}`);
+      state.coins += d.coins || 0;
+      state.stars += d.stars || 0;
+      updateHUD();
+      loadDaily();
+    } else {
+      showToast('❌ ' + (d.error || 'Ошибка'));
+    }
+  } catch(e) { showToast('❌ Ошибка'); }
+}
+
+// ─── ЛИДЕРБОРД ───
+async function loadLB() {
+  try {
+    const r = await fetch(API_BASE + '/api/leaderboard?limit=30');
+    const d = await r.json();
+    if (d.success) renderLB(d.leaderboard || []);
+  } catch(e) {}
+}
+
+function renderLB(entries) {
+  const c = document.getElementById('lbContent');
+  if (!entries.length) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Пока пусто 😢</p>'; return; }
+  c.innerHTML = entries.map((e, i) => {
+    const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const me = state.user && e.telegram_id === state.user.telegram_id;
+    const pos = i<3 ? ['🥇','🥈','🥉'][i] : `<span style="font-weight:800;color:rgba(255,255,255,0.15);font-family:Unbounded,sans-serif;">${i+1}</span>`;
+    const em = e.waifu?.emoji || '🌸';
+    return `<div class="lb-entry" style="${me?'background:rgba(245,194,224,0.02);border-radius:10px;':''}">
+      <div class="lb-rank ${rc}">${pos}</div>
+      <div class="lb-ava">${em}</div>
+      <div class="lb-info">
+        <div class="lb-name">${e.name}${me?' 👈':''}</div>
+        <div class="lb-sub">${e.waifu?.name||'—'} · ${fmtCoin(e.total_taps||0)} тапов</div>
+      </div>
+      <div class="lb-coins">🪙 ${fmtCoin(e.coins)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── РЕФЕРАЛЫ ───
+async function loadRef() {
+  const c = document.getElementById('refContent');
+  if (!state.user) { c.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.15);padding:30px;font-family:Unbounded,sans-serif;font-weight:800;">Авторизуйся</p>'; return; }
+  let refCount = 0, refBonus = 0;
+  try {
+    const r = await fetch(API_BASE + '/api/referral/' + state.user.telegram_id);
+    const d = await r.json();
+    if (d.success) { refCount = d.referral_count || 0; refBonus = d.total_bonus || 0; }
+  } catch(e) {}
+  const link = 'https://t.me/W3ifuTapBot?start=ref_' + state.user.telegram_id;
+  c.innerHTML = `<div class="ref-section">
+    <div class="ref-icon">🤝</div>
+    <div class="ref-title">Приглашай друзей!</div>
+    <div class="ref-desc">За каждого друга даём <b style="color:#ffd700;">🪙5000</b><br>+ <b style="color:#ff6b9d;">1000</b> за каждого следующего!</div>
+    <div class="ref-stats">
+      <div class="ref-stat"><div class="rs-v">${refCount}</div><div class="rs-l">Друзей</div></div>
+      <div class="ref-stat"><div class="rs-v" style="background:linear-gradient(135deg,#ffd700,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">🪙${fmtCoin(refBonus)}</div><div class="rs-l">Бонус</div></div>
+    </div>
+    <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.08);border-radius:12px;padding:10px 14px;margin:12px 0;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);">
+      Следующий друг: <span style="color:#ffd700;">🪙${fmtCoin(5000 + refCount * 1000)}</span>
+    </div>
+    <div class="ref-link-box">${link}</div>
+    <button class="ref-copy-btn" onclick="copyRef('${link}')">📋 Копировать ссылку</button>
+    <p style="color:rgba(255,255,255,0.1);font-size:10px;font-weight:700;margin-top:14px;letter-spacing:0.5px;">🔥 Кинь ссылку в чаты про аниме!</p>
+  </div>`;
+}
+
+function copyRef(link) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(link).then(() => showToast('✅ Ссылка скопирована!'));
+  } else {
+    const el = document.createElement('textarea');
+    el.value = link;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('✅ Ссылка скопирована!');
+  }
+}
+
+// ─── РЕКЛАМА ───
+let adCountdown = 0;
+let adActive = false;
+
+function openAd() {
+  if (!state.user || adActive) return;
+  adActive = true;
+  document.getElementById('adBanner').style.display = 'none';
+  document.getElementById('adModal').classList.add('show');
+  document.getElementById('adSkipBtn').style.display = 'block';
+  document.getElementById('adCloseBtn').style.display = 'none';
+  document.getElementById('adReward').textContent = '+100 🪙 после просмотра';
+  document.getElementById('adLabel').textContent = 'Реклама';
+  startAdCountdown();
+}
+
+function startAdCountdown() {
+  let sec = 5;
+  document.getElementById('adTimer').textContent = sec;
+  clearInterval(adTimer);
+  adTimer = setInterval(() => {
+    sec--;
+    if (sec <= 0) {
+      clearInterval(adTimer);
+      document.getElementById('adTimer').textContent = '✅';
+      document.getElementById('adLabel').textContent = 'Реклама завершена!';
+      document.getElementById('adSkipBtn').style.display = 'none';
+      document.getElementById('adCloseBtn').style.display = 'block';
+      document.getElementById('adReward').textContent = '🎉 +100 🪙 получено!';
+      // Даём награду
+      state.coins += 100;
+      updateHUD();
+      // Сохраняем на сервере
+      fetch(API_BASE + '/api/tap', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ telegram_id: state.user.telegram_id }) });
+      showToast('🎬 +100 🪙 за рекламу!');
+    } else {
+      document.getElementById('adTimer').textContent = sec;
+    }
+  }, 1000);
+}
+
+function skipAd() {
+  clearInterval(adTimer);
+  closeAd();
+  showToast('⏭ Реклама пропущена');
+}
+
+function closeAd() {
+  document.getElementById('adModal').classList.remove('show');
+  adActive = false;
+}
+
+// ─── ТОСТ ───
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ─── МОДАЛКА ───
+function showModal(title, text) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modalBtns').innerHTML = '<button onclick="closeModal()">🎉 Круто!</button>';
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ─── SAKURA PARTICLE SYSTEM ───
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  let animId = null;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const COLORS = ['rgba(255,182,193,0.5)', 'rgba(255,105,180,0.4)', 'rgba(255,192,203,0.45)', 'rgba(255,218,185,0.35)', 'rgba(238,130,238,0.3)'];
+  const PETAL_COUNTS = [40, 50, 60];
+  const PETAL_SIZES = [
+    { w: [5,12], h: [3,7] },
+    { w: [4,10], h: [2,6] },
+    { w: [6,14], h: [3,8] }
+  ];
+
+  function createPetal() {
+    const sizeIdx = Math.floor(Math.random() * PETAL_SIZES.length);
+    const s = PETAL_SIZES[sizeIdx];
+    return {
+      x: Math.random() * W,
+      y: -20 - Math.random() * 100,
+      w: s.w[0] + Math.random() * (s.w[1] - s.w[0]),
+      h: s.h[0] + Math.random() * (s.h[1] - s.h[0]),
+      vx: -0.3 - Math.random() * 0.6,
+      vy: 0.4 + Math.random() * 0.8,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.03,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      swing: Math.random() * 2,
+      swingSpeed: 0.01 + Math.random() * 0.02,
+      swingOffset: Math.random() * Math.PI * 2,
+      opacity: 0.2 + Math.random() * 0.4
+    };
+  }
+
+  function initParticles(count) {
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      const p = createPetal();
+      p.y = Math.random() * H;
+      particles.push(p);
+    }
+  }
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    ctx.globalAlpha = p.opacity;
+    
+    // Рисуем лепесток сакуры
+    ctx.beginPath();
+    ctx.moveTo(0, -p.h/2);
+    ctx.bezierCurveTo(p.w/2, -p.h/3, p.w/2, p.h/3, 0, p.h/2);
+    ctx.bezierCurveTo(-p.w/2, p.h/3, -p.w/2, -p.h/3, 0, -p.h/2);
+    ctx.closePath();
+    
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    
+    // Тонкая прожилка
+    ctx.beginPath();
+    ctx.moveTo(0, -p.h/2);
+    ctx.lineTo(0, p.h/2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 0.3;
+    ctx.stroke();
+    
+    ctx.restore();
+  }
+
+  function updatePetal(p) {
+    p.swingOffset += p.swingSpeed;
+    p.x += p.vx + Math.sin(p.swingOffset) * 0.3;
+    p.y += p.vy;
+    p.rotation += p.rotSpeed;
+    
+    // Имитация ветра — иногда порыв
+    if (Math.random() < 0.002) {
+      p.vx += (Math.random() - 0.5) * 0.5;
+      p.vy += (Math.random() - 0.5) * 0.3;
+    }
+    
+    if (p.y > H + 30 || p.x < -50 || p.x > W + 50) {
+      Object.assign(p, createPetal());
+      p.y = -20 - Math.random() * 50;
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      updatePetal(p);
+      drawPetal(p);
+    }
+    animId = requestAnimationFrame(animate);
+  }
+
+  // Определяем количество частиц по размеру экрана
+  let count = PETAL_COUNTS[1];
+  if (W < 380) count = PETAL_COUNTS[0];
+  else if (W > 600) count = PETAL_COUNTS[2];
+  
+  initParticles(count);
+  animate();
+})();
+
+// ─── СТАРТ ───
+document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'complete') init();
+</script>
+</body>
+</html>
